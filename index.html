@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Universo del Amor ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050008;
+  --panel:rgba(20,0,20,.55);
+  --pink:#ff4fc9;
+  --pink-soft:rgba(255,120,225,.55);
+  --gold:#ffd27a;
+  --text:#ffe9fb;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);}
+body{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  overflow:hidden;
+}
+#app{
+  height:100vh;
+  width:100vw;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scroll-snap-type:y proximity;
+  scroll-behavior:smooth;
+}
+::-webkit-scrollbar{display:none;}
+.chapter{
+  position:relative;
+  width:100%;
+  min-height:100vh;
+  scroll-snap-align:start;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.chapter canvas{position:absolute;inset:0;width:100%;height:100%;}
+.chapter-label{
+  position:absolute;
+  top:22px;left:50%;transform:translateX(-50%);
+  z-index:4;
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,215,250,.65);
+  text-align:center;
+  pointer-events:none;
+}
+.chapter-title{
+  position:absolute;
+  top:46px;left:50%;transform:translateX(-50%);
+  z-index:4;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(30px,5vw,52px);
+  color:#fff;
+  text-shadow:0 0 18px rgba(255,0,200,.6);
+  pointer-events:none;
+  text-align:center;
+}
+.scroll-hint{
+  position:absolute;
+  bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:4;
+  font-size:11px;letter-spacing:2px;
+  color:rgba(255,220,250,.55);
+  animation:bob 2.2s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,6px);}}
+.cycle-phrase{
+  position:absolute;
+  bottom:56px;left:50%;transform:translateX(-50%);
+  z-index:4;pointer-events:none;
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(18px,2.6vw,26px);
+  color:#ffd7f5;
+  text-shadow:0 0 14px rgba(255,0,190,.45);
+  min-height:1.4em;white-space:nowrap;
+  border-right:1px solid rgba(255,210,245,.55);
+  padding-right:3px;
+}
+
+/* NAV DOTS */
+#navDots{
+  position:fixed;
+  right:16px;top:50%;transform:translateY(-50%);
+  z-index:50;
+  display:flex;flex-direction:column;gap:14px;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+  border:1px solid rgba(255,150,230,.6);
+  background:rgba(255,150,230,.15);
+  cursor:pointer;
+  position:relative;
+  transition:.3s;
+}
+.dot.active{background:#ff3fc4;box-shadow:0 0 10px #ff3fc4;transform:scale(1.3);}
+.dot .tip{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  white-space:nowrap;
+  font-size:11px;letter-spacing:1px;
+  background:rgba(20,0,20,.8);
+  border:1px solid rgba(255,120,230,.35);
+  padding:4px 9px;border-radius:10px;
+  opacity:0;pointer-events:none;
+  transition:.2s;
+}
+.dot:hover .tip{opacity:1;}
+
+/* ===== CAPÍTULO 2: FORMAS ===== */
+.ch2-halo{
+  position:absolute;top:50%;left:50%;z-index:2;pointer-events:none;
+  width:min(70vw,520px);height:min(70vw,520px);
+  transform:translate(-50%,-58%);
+  border-radius:50%;
+  border:1px solid rgba(255,180,240,.16);
+  box-shadow:0 0 0 18px rgba(255,120,220,.03),0 0 60px rgba(255,0,190,.08) inset;
+  animation:haloSpin 40s linear infinite;
+}
+.ch2-halo::before,.ch2-halo::after{
+  content:"";position:absolute;inset:9%;border-radius:50%;
+  border:1px dashed rgba(255,180,240,.12);
+}
+.ch2-halo::after{inset:18%;border-style:solid;border-color:rgba(255,180,240,.08);}
+@keyframes haloSpin{to{transform:translate(-50%,-58%) rotate(360deg);}}
+
+.formas-panel{
+  position:absolute;bottom:7%;left:50%;transform:translateX(-50%);
+  z-index:5;width:min(92vw,540px);
+  padding:4px;
+  border-radius:26px;
+  background:conic-gradient(from var(--ang,0deg),#ff3fc4,#ffd27a,#ff3fc4,#c86bff,#ff3fc4);
+  animation:borderSpin 6s linear infinite;
+  box-shadow:0 22px 54px rgba(255,0,170,.22);
+}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
+@keyframes borderSpin{to{--ang:360deg;}}
+.formas-panel-inner{
+  padding:22px 26px 18px;
+  text-align:center;
+  background:linear-gradient(160deg,rgba(34,0,32,.92),rgba(9,0,11,.95));
+  border-radius:22px;
+  position:relative;
+  overflow:hidden;
+}
+.formas-panel-inner::before{
+  content:"✦";position:absolute;top:8px;left:14px;font-size:11px;color:rgba(255,215,250,.35);
+}
+.formas-panel-inner::after{
+  content:"✦";position:absolute;top:8px;right:14px;font-size:11px;color:rgba(255,215,250,.35);
+}
+.shape-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 16px 5px 12px;
+  border-radius:100px;
+  background:rgba(255,215,122,.08);
+  border:1px solid rgba(255,210,122,.3);
+  margin-bottom:12px;
+}
+.shape-badge .dotpip{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);}
+.shape-name{
+  font-size:11px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);opacity:.92;
+  transition:opacity .35s;
+}
+#shapeCaption{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(23px,3.8vw,36px);
+  color:#fff0fb;
+  text-shadow:0 0 16px rgba(255,0,200,.5);
+  line-height:1.28;
+  transition:opacity .35s;
+  min-height:1.4em;
+}
+.shape-progress{
+  width:100%;height:2px;border-radius:2px;
+  background:rgba(255,255,255,.1);
+  margin-top:16px;overflow:hidden;
+}
+.shape-progress i{
+  display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#ffd27a,#ff3fc4);
+  box-shadow:0 0 8px rgba(255,150,90,.7);
+}
+.shape-dots{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px;
+}
+.sdot{
+  width:7px;height:7px;border-radius:50%;cursor:pointer;
+  background:rgba(255,170,235,.25);
+  border:1px solid rgba(255,170,235,.35);
+  transition:.3s;
+}
+.sdot:hover{background:rgba(255,170,235,.6);transform:scale(1.25);}
+.sdot.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 9px var(--gold);transform:scale(1.35);}
+
+/* ===== CAPÍTULO 3: CARTAS ===== */
+.cartas-wrap{
+  position:relative;z-index:3;
+  width:100%;height:100%;
+  overflow-y:auto;
+  padding:118px 6vw 80px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,232px));
+  gap:24px;
+  align-content:flex-start;
+  justify-content:center;
+}
+.lcard{
+  position:relative;height:152px;cursor:pointer;
+  border-radius:14px;
+  background:
+    linear-gradient(160deg,rgba(74,8,56,.92),rgba(22,0,20,.96));
+  border:1px solid rgba(255,150,235,.32);
+  box-shadow:0 14px 34px rgba(255,0,170,.16);
+  overflow:hidden;
+  opacity:0;transform:translateY(34px) scale(.94);
+  transition:opacity .7s ease,transform .45s cubic-bezier(.2,1.2,.4,1),box-shadow .35s,border-color .35s;
+}
+.lcard.show{opacity:1;transform:translateY(0) scale(1);}
+.lcard.show:hover{
+  transform:translateY(-7px) scale(1.03);
+  border-color:rgba(255,190,245,.7);
+  box-shadow:0 22px 46px rgba(255,0,190,.34);
+}
+.lcard::before{ /* solapa del sobre */
+  content:"";position:absolute;top:0;left:0;right:0;height:74px;
+  background:linear-gradient(160deg,rgba(255,110,215,.22),rgba(255,110,215,.02));
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  border-bottom:1px solid rgba(255,170,240,.18);
+}
+.lcard::after{ /* brillo diagonal */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.1) 50%,transparent 58%);
+  transform:translateX(-120%);transition:transform .8s ease;
+}
+.lcard.show:hover::after{transform:translateX(120%);}
+.lc-seal{
+  position:absolute;top:44px;left:50%;transform:translateX(-50%);
+  width:40px;height:40px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#ff8ade,#b8006f);
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  box-shadow:0 0 16px rgba(255,0,180,.6);z-index:2;
+}
+.lc-num{
+  position:absolute;top:12px;left:14px;z-index:2;
+  font-size:10px;letter-spacing:3px;color:rgba(255,205,245,.5);
+}
+.lc-title{
+  position:absolute;bottom:34px;left:14px;right:14px;z-index:2;
+  text-align:center;font-size:17px;color:#fff0fb;line-height:1.2;
+}
+.lc-hint{
+  position:absolute;bottom:14px;left:0;right:0;z-index:2;text-align:center;
+  font-size:10px;letter-spacing:2.4px;text-transform:uppercase;
+  color:rgba(255,205,245,.42);
+}
+
+/* carta abierta */
+#letterOverlay{
+  position:fixed;inset:0;z-index:150;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  background:rgba(6,0,10,.72);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .35s;
+}
+#letterOverlay.show{opacity:1;pointer-events:auto;}
+.letter-wrap{
+  display:flex;gap:22px;align-items:flex-start;justify-content:center;
+  width:min(94vw,860px);
+  transform:translateY(18px) scale(.96);
+  transition:transform .4s cubic-bezier(.2,1.1,.4,1);
+}
+#letterOverlay.show .letter-wrap{transform:translateY(0) scale(1);}
+
+.paper{
+  flex:1 1 480px;max-width:520px;
+  max-height:84vh;overflow-y:auto;
+  padding:30px 30px 24px;
+  border-radius:20px;
+  background:linear-gradient(165deg,rgba(42,0,40,.9),rgba(12,0,16,.95));
+  border:1px solid rgba(255,140,235,.25);
+  color:#ffeaf7;
+  box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,0,150,.08);
+}
+
+/* barra de progreso + corazón */
+.p-topbar{display:flex;align-items:center;gap:16px;margin-bottom:26px;}
+.p-progress{flex:1;display:flex;flex-direction:column;gap:6px;}
+.p-progress .track{height:2px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden;}
+.p-progress .track.small{width:38%;}
+.p-progress .track i{display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,#ff3fc4,#ffd27a);
+  box-shadow:0 0 8px rgba(255,80,210,.6);transition:width .5s ease;}
+.p-heart{
+  flex:none;background:none;border:none;cursor:pointer;
+  font-size:19px;color:rgba(255,200,240,.55);transition:.2s;
+}
+.p-heart:hover{transform:scale(1.15);}
+.p-heart.on{color:#ff4fc9;text-shadow:0 0 10px rgba(255,60,200,.7);}
+
+/* cuerpo de la carta */
+#pBody p{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-style:italic;font-weight:500;
+  font-size:19px;line-height:1.85;
+  color:#ffeef8;margin:0 0 18px;
+  padding-bottom:18px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+#pBody p:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+#pBody b{color:#ff8ade;font-weight:600;}
+
+.p-signrow{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);
+}
+.p-sign{font-family:'Great Vibes',cursive;font-size:26px;color:#ff9bea;}
+
+.p-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:18px;
+}
+.p-nav button{
+  border:1px solid rgba(255,150,230,.35);background:rgba(255,0,150,.1);
+  color:#ffd2f5;padding:7px 14px;border-radius:18px;cursor:pointer;
+  font-family:inherit;font-size:13px;letter-spacing:.5px;transition:.2s;
+}
+.p-nav button:hover{background:rgba(255,0,150,.24);}
+.p-nav button:disabled{opacity:.3;cursor:default;}
+.p-count{font-size:12px;letter-spacing:2px;color:rgba(255,210,245,.5);}
+
+/* tarjeta de foto que acompaña la carta */
+.letter-photo{
+  flex:0 0 220px;
+  border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(46,0,42,.7),rgba(10,0,12,.9));
+  border:1px solid rgba(255,140,235,.3);
+  box-shadow:0 20px 50px rgba(255,0,170,.18);
+  padding:10px 10px 18px;text-align:center;
+}
+.letter-photo img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;display:block;
+  box-shadow:0 10px 26px rgba(0,0,0,.4);
+}
+.letter-photo .cap{
+  margin-top:14px;font-family:'Great Vibes',cursive;
+  font-size:clamp(19px,2.6vw,25px);color:#ffd7f0;line-height:1.3;
+  text-shadow:0 0 12px rgba(255,0,190,.3);
+}
+
+/* ===== CAPÍTULO 5 — MÚSICA ===== */
+.musica-wrap{
+  position:relative;z-index:3;
+  padding:104px 5vw 46px;
+  width:100%;max-width:980px;
+  max-height:100vh;overflow-y:auto;
+}
+.music-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+/* ---- tarjeta de lista ---- */
+.playlist-card{
+  background:linear-gradient(155deg,rgba(46,0,40,.72),rgba(12,0,14,.86));
+  border:1px solid rgba(255,140,235,.3);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:0 18px 46px rgba(255,0,170,.15);
+  backdrop-filter:blur(8px);
+}
+.pl-header{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,215,250,.6);margin-bottom:14px;padding:0 2px;
+}
+.playlist{width:100%;display:flex;flex-direction:column;gap:8px;}
+.tItem{
+  display:flex;align-items:center;gap:13px;
+  padding:10px 12px;border-radius:14px;cursor:pointer;
+  background:rgba(255,255,255,.02);
+  border:1px solid transparent;
+  transition:.22s;
+}
+.tItem:hover{background:rgba(255,80,210,.1);}
+.tItem.active{
+  background:linear-gradient(90deg,rgba(255,60,200,.24),rgba(255,60,200,.04));
+  border-color:rgba(255,140,235,.4);
+}
+.tThumb{
+  width:46px;height:46px;flex:none;border-radius:11px;object-fit:cover;
+  border:1px solid rgba(255,150,230,.3);
+}
+.tThumbFallback{
+  width:46px;height:46px;flex:none;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#4a0038,#12000e);
+  border:1px solid rgba(255,150,230,.3);font-size:16px;color:#ff9bea;
+}
+.tMeta{flex:1;min-width:0;}
+.tName{font-size:15px;font-weight:600;color:#fff0fb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tTag{font-size:11.5px;color:rgba(255,205,245,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tExtra{display:flex;gap:6px;flex:none;opacity:0;transition:.2s;}
+.tItem:hover .tExtra{opacity:1;}
+.tMini{
+  border:1px solid rgba(255,140,235,.35);
+  background:rgba(255,0,190,.08);color:#ffd2f5;
+  font-size:11px;padding:4px 7px;border-radius:9px;cursor:pointer;transition:.2s;
+}
+.tMini:hover{background:rgba(255,0,190,.26);}
+.tRight{display:flex;align-items:center;gap:10px;flex:none;}
+.tDur{font-size:12.5px;color:rgba(255,210,245,.55);min-width:32px;text-align:right;}
+.tPlayDot{
+  width:28px;height:28px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06);color:rgba(255,220,250,.55);
+  font-size:10.5px;transition:.2s;
+}
+.tItem.active .tPlayDot{
+  background:radial-gradient(circle at 35% 30%,#ff77d6,#b0006d);
+  color:#fff;box-shadow:0 0 12px rgba(255,0,190,.55);
+}
+.dropzone{
+  margin-top:14px;
+  width:100%;text-align:center;
+  border:1px dashed rgba(255,140,235,.35);
+  border-radius:14px;padding:12px 14px;cursor:pointer;
+  font-size:13px;color:rgba(255,215,250,.65);
+  transition:.25s;
+}
+.dropzone:hover,.dropzone.over{background:rgba(255,0,190,.12);border-color:rgba(255,140,235,.75);color:#fff0fb;}
+
+/* ---- tarjeta "reproduciendo ahora" ---- */
+.now-card{
+  position:relative;
+  background:linear-gradient(160deg,rgba(46,0,42,.78),rgba(10,0,12,.9));
+  border:1px solid rgba(255,140,235,.32);
+  border-radius:22px;
+  padding:28px 24px 24px;
+  text-align:center;
+  box-shadow:0 18px 50px rgba(255,0,170,.16), inset 0 1px 0 rgba(255,220,250,.1);
+  backdrop-filter:blur(8px);
+}
+.disc{
+  width:150px;height:150px;margin:0 auto 18px;border-radius:50%;position:relative;
+  background:
+    repeating-radial-gradient(circle at 50% 50%,rgba(255,255,255,.045) 0 2px,rgba(0,0,0,0) 2px 5px),
+    radial-gradient(circle at 34% 30%,#4a0038,#0d000c 72%);
+  box-shadow:0 0 34px rgba(255,0,190,.4), inset 0 0 26px rgba(0,0,0,.8);
+  display:flex;align-items:center;justify-content:center;
+  animation:spinDisc 9s linear infinite;
+  animation-play-state:paused;
+}
+.disc.spin{animation-play-state:running;}
+.disc::after{
+  content:"";position:absolute;width:14px;height:14px;border-radius:50%;z-index:4;
+  background:#12000f;border:1px solid rgba(255,150,230,.4);
+}
+.disc-core{
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ff77d6,#b0006d);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;color:#fff2fb;
+  box-shadow:0 0 20px rgba(255,0,190,.55);
+  z-index:2;
+}
+.disc-art{
+  position:absolute;width:112px;height:112px;border-radius:50%;
+  object-fit:cover;z-index:2;display:none;
+  box-shadow:0 0 22px rgba(255,0,190,.55),inset 0 0 24px rgba(0,0,0,.6);
+}
+.disc.has-art .disc-art{display:block;}
+.disc.has-art .disc-core{display:none;}
+.disc-shine{
+  position:absolute;inset:0;border-radius:50%;z-index:3;pointer-events:none;
+  background:linear-gradient(125deg,rgba(255,255,255,.22) 0%,transparent 38%,transparent 62%,rgba(255,255,255,.1) 100%);
+}
+@keyframes spinDisc{to{transform:rotate(360deg);}}
+
+.now-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(22px,3vw,28px);color:#fff0fb;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.now-sub{font-size:12.5px;letter-spacing:.5px;color:#ff9bea;margin-top:3px;}
+canvas.viz{width:100%;height:34px;display:block;margin:14px 0 4px;}
+.bar{
+  width:100%;height:5px;border-radius:3px;background:rgba(255,255,255,.13);
+  overflow:hidden;cursor:pointer;position:relative;margin-top:6px;
+}
+.bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ff3fc4,#ffd27a);
+  box-shadow:0 0 10px rgba(255,80,210,.7);transition:width .1s linear;}
+.times{display:flex;justify-content:space-between;font-size:11px;
+  color:rgba(255,210,245,.5);margin-top:5px;letter-spacing:.5px;}
+.controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;}
+.ctrl{
+  background:none;border:none;color:#ffd2f5;cursor:pointer;
+  font-size:18px;padding:4px;opacity:.8;transition:.2s;
+}
+.ctrl:hover{opacity:1;transform:scale(1.15);}
+.ctrl.big{
+  width:52px;height:52px;border-radius:50%;opacity:1;
+  background:radial-gradient(circle at 35% 30%,#ff5fd0,#a8006f);
+  color:#fff;box-shadow:0 0 18px rgba(255,0,200,.55);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.ctrl.loop{position:absolute;right:20px;top:22px;font-size:15px;}
+.volrow{
+  display:flex;align-items:center;gap:10px;margin-top:16px;
+  color:rgba(255,210,245,.6);font-size:14px;
+}
+.vol{
+  -webkit-appearance:none;appearance:none;flex:1;
+  height:4px;border-radius:3px;
+  background:rgba(255,255,255,.16);outline:none;cursor:pointer;
+}
+.vol::-webkit-slider-thumb{
+  -webkit-appearance:none;width:12px;height:12px;border-radius:50%;
+  background:#ff5fd0;box-shadow:0 0 8px rgba(255,0,200,.7);
+}
+.vol::-moz-range-thumb{width:12px;height:12px;border:none;border-radius:50%;background:#ff5fd0;}
+
+.fav-card{width:100%;margin-top:18px;}
+.fav-btn{
+  width:100%;
+  border:1px solid rgba(255,120,230,.4);
+  background:rgba(255,255,255,.03);
+  color:#ffd5fa;padding:13px 18px;border-radius:20px;
+  cursor:pointer;font-family:inherit;font-size:14px;letter-spacing:.5px;
+  transition:.25s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.fav-btn:hover{background:rgba(255,0,190,.14);}
+.fav-btn.on{background:rgba(255,0,150,.22);border-color:rgba(255,140,235,.7);color:#fff;}
+.hintMus{font-size:11.5px;color:rgba(255,200,240,.4);text-align:center;line-height:1.5;margin-top:14px;}
+
+@media (max-width:760px){
+  .music-grid{grid-template-columns:1fr;}
+  .now-card{order:-1;}
+}
+
+/* ===== CAPÍTULO 6 — CIERRE ===== */
+.cierre-wrap{
+  position:relative;z-index:3;
+  width:100%;max-width:640px;
+  padding:104px 5vw 46px;
+  max-height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+/* galería de fotos */
+.gal{
+  width:100%;
+  background:linear-gradient(155deg,rgba(44,0,40,.7),rgba(12,0,14,.85));
+  border:1px solid rgba(255,140,235,.3);
+  border-radius:22px;padding:16px;
+  box-shadow:0 18px 46px rgba(255,0,170,.15);
+  backdrop-filter:blur(8px);
+}
+.gal-stage{
+  position:relative;width:100%;
+  aspect-ratio:4/3;
+  border-radius:16px;overflow:hidden;
+  background:radial-gradient(circle at 50% 40%,rgba(255,90,210,.12),rgba(0,0,0,.45));
+  display:flex;align-items:center;justify-content:center;
+}
+/* cada foto = fondo desenfocado (rellena) + foto completa encima */
+.gal-slide{
+  position:absolute;inset:0;
+  opacity:0;pointer-events:none;
+  transition:opacity 1s ease;
+}
+.gal-slide.on{opacity:1;}
+.gal-slide .bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;
+  filter:blur(26px) saturate(1.25) brightness(.55);
+  transform:scale(1.18);
+}
+.gal-slide .fg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:contain;            /* la foto se ve COMPLETA, sin recortes */
+  object-position:center;
+  padding:10px 10px 30px;
+  transform:scale(.985);
+  transition:transform 7s ease;
+  filter:drop-shadow(0 10px 26px rgba(0,0,0,.55));
+}
+.gal-slide.on .fg{transform:scale(1);}
+.gal-count{
+  position:absolute;top:10px;right:12px;z-index:3;
+  font-size:11px;letter-spacing:2px;
+  color:rgba(255,225,250,.8);
+  background:rgba(20,0,20,.5);
+  border:1px solid rgba(255,150,230,.3);
+  padding:3px 10px;border-radius:12px;
+  backdrop-filter:blur(4px);
+}
+.gal-vignette{
+  position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 70px rgba(30,0,25,.75);
+  background:linear-gradient(to top,rgba(20,0,18,.55),transparent 45%);
+}
+.gal-cap{
+  position:absolute;left:0;right:0;bottom:12px;text-align:center;
+  font-family:'Great Vibes',cursive;font-size:clamp(19px,3.4vw,26px);
+  color:#fff0fb;text-shadow:0 2px 14px rgba(0,0,0,.8);
+  padding:0 16px;pointer-events:none;
+}
+.gal-empty{
+  text-align:center;padding:26px 20px;color:rgba(255,215,250,.62);
+  font-size:14px;line-height:1.6;
+}
+.gal-empty span{font-size:30px;display:block;margin-bottom:8px;}
+.gal-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;z-index:3;
+  background:rgba(20,0,20,.55);border:1px solid rgba(255,150,230,.4);
+  color:#ffd6f7;cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;transition:.2s;
+}
+.gal-nav:hover{background:rgba(255,0,190,.35);}
+.gal-nav.prev{left:10px;} .gal-nav.next{right:10px;}
+.gal-thumbs{
+  display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;
+}
+.gal-thumbs img{
+  width:56px;height:56px;flex:none;object-fit:contain;border-radius:10px;
+  background:rgba(255,255,255,.05);
+  cursor:pointer;opacity:.5;border:1px solid rgba(255,150,230,.25);transition:.25s;
+}
+.gal-thumbs img:hover{opacity:.85;}
+.gal-thumbs img.on{opacity:1;border-color:var(--gold);box-shadow:0 0 12px rgba(255,210,122,.5);transform:translateY(-2px);}
+
+.cierre-card{
+  position:relative;z-index:3;width:100%;
+  text-align:center;
+  padding:30px 28px;
+  background:linear-gradient(155deg,rgba(44,0,40,.72),rgba(12,0,14,.86));
+  border:1px solid rgba(255,150,230,.36);
+  border-radius:22px;
+  box-shadow:0 18px 46px rgba(255,0,190,.18);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .9s ease, transform .9s ease;
+}
+.cierre-card.show{opacity:1;transform:translateY(0);}
+.cierre-card .c-orn{
+  font-size:13px;letter-spacing:7px;color:var(--gold);opacity:.75;margin-bottom:12px;
+}
+.cierre-card p{font-size:18.5px;line-height:1.7;color:#ffe6fb;margin:0 0 6px;}
+.cierre-card .firma{
+  margin-top:14px;font-family:'Great Vibes',cursive;font-size:30px;color:#ffd7f5;
+  text-shadow:0 0 16px rgba(255,0,200,.4);
+}
+.cierre-btns{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cierre-btns button{
+  border:1px solid rgba(255,120,230,.55);
+  background:rgba(255,0,190,.14);
+  color:#ffd5fa;padding:9px 16px;border-radius:20px;
+  cursor:pointer;font-family:inherit;font-size:13.5px;letter-spacing:.5px;
+  transition:.25s;
+}
+.cierre-btns button:hover{background:rgba(255,0,190,.32);transform:scale(1.05);}
+
+#confettiLayer{position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden;}
+.confetti-piece{
+  position:absolute;top:-40px;font-size:22px;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:.2;}
+}
+
+@media (max-width:640px){
+  #navDots{right:8px;}
+  .dot .tip{display:none;}
+  .cartas-wrap{padding:104px 4vw 70px;gap:16px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+  .lcard{height:138px;}
+  .paper{padding:22px 18px 18px;}
+  #pBody p{font-size:17px;}
+  .letter-wrap{flex-direction:column;align-items:center;}
+  .letter-photo{order:-1;width:100%;max-width:260px;flex:none;}
+  .formas-panel{bottom:6%;padding:14px 16px 12px;}
+  .cierre-wrap{padding:96px 4vw 40px;}
+  .musica-wrap{padding:96px 4vw 40px;}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== CAPÍTULO 1 — UNIVERSO ===================== -->
+  <section class="chapter" id="ch1">
+    <canvas id="canvas1"></canvas>
+    <div class="chapter-label">Capítulo I</div>
+    <div class="chapter-title">Nuestro Universo</div>
+    <div class="cycle-phrase" id="cyclePhrase"></div>
+    <div class="scroll-hint">DESLIZA PARA CONTINUAR ↓</div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 2 — FORMAS ===================== -->
+  <section class="chapter" id="ch2">
+    <canvas id="canvas2"></canvas>
+    <div class="ch2-halo"></div>
+    <div class="chapter-label">Capítulo II</div>
+    <div class="chapter-title">Formas que te describen</div>
+    <div class="formas-panel">
+      <div class="formas-panel-inner">
+        <div class="shape-badge"><span class="dotpip"></span><span class="shape-name" id="shapeName"></span></div>
+        <div id="shapeCaption"></div>
+        <div class="shape-progress"><i id="shapeProg"></i></div>
+        <div class="shape-dots" id="shapeDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 3 — CARTAS ===================== -->
+  <section class="chapter" id="ch3">
+    <canvas id="canvas3"></canvas>
+    <div class="chapter-label">Capítulo III</div>
+    <div class="chapter-title">Cartas para ti</div>
+    <div class="cartas-wrap" id="cartasWrap"></div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 4 — MÚSICA ===================== -->
+  <section class="chapter" id="ch5">
+    <canvas id="canvas5"></canvas>
+    <div class="chapter-label">Capítulo IV</div>
+    <div class="chapter-title">Nuestras canciones</div>
+    <div class="musica-wrap" id="musicaWrap"></div>
+  </section>
+
+  <!-- ===================== CAPÍTULO 5 — CIERRE ===================== -->
+  <section class="chapter" id="ch6">
+    <canvas id="canvas6"></canvas>
+    <div class="chapter-label">Capítulo V</div>
+    <div class="chapter-title">Para ti, hoy y siempre</div>
+    <div class="cierre-wrap">
+      <div class="gal" id="gal">
+        <div class="gal-stage" id="galStage">
+          <div class="gal-empty" id="galEmpty">
+            <span>📸</span>
+            Añade tus fotos en la lista <code>fotos</code> del código.
+          </div>
+          <div class="gal-vignette"></div>
+          <div class="gal-count" id="galCount" style="display:none"></div>
+          <div class="gal-cap" id="galCap"></div>
+          <button class="gal-nav prev" id="galPrev" style="display:none">❮</button>
+          <button class="gal-nav next" id="galNext" style="display:none">❯</button>
+        </div>
+        <div class="gal-thumbs" id="galThumbs"></div>
+      </div>
+
+      <div class="cierre-card">
+        <div class="c-orn">✦ ✦ ✦</div>
+        <p>Si llegaste hasta aquí, ya sabes lo importante que eres para mí. Este pequeño universo tiene una sola verdad dentro de él: te amo, sin condiciones ni medida.</p>
+        <p class="firma">— con todo mi amor</p>
+        <div class="cierre-btns">
+          <button id="surpriseBtn">🎉 Una sorpresa más</button>
+          <button id="restartBtn">↺ Volver a empezar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="confettiLayer"></div>
+
+<!-- NAV -->
+<div id="navDots"></div>
+
+<!-- OVERLAY CARTA -->
+<div id="letterOverlay">
+  <div class="letter-wrap">
+    <div class="paper">
+      <div class="p-topbar">
+        <div class="p-progress">
+          <div class="track big"><i id="pProgBig"></i></div>
+          <div class="track small"><i id="pProgSmall"></i></div>
+        </div>
+        <button class="p-heart" id="pHeartTop" title="marcar como favorita">♡</button>
+      </div>
+      <div id="pBody"></div>
+      <div class="p-signrow">
+        <div class="p-sign" id="pSign">Con todo mi cariño,</div>
+        <button class="p-heart" id="pHeartBottom" title="marcar como favorita">♡</button>
+      </div>
+      <div class="p-nav">
+        <button id="pPrev">❮ anterior</button>
+        <span class="p-count" id="pCount"></span>
+        <button id="pNext">siguiente ❯</button>
+      </div>
+    </div>
+    <div class="letter-photo" id="letterPhoto">
+      <img id="pPhotoImg" src="" alt="">
+      <div class="cap" id="pPhotoCap"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   UTILIDADES GENERALES
+========================================================= */
+const rand=(a,b)=>Math.random()*(b-a)+a;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function glowOn(ctx,x,y,r,color,alpha){
+  const g=ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0,color.replace("A",alpha));
+  g.addColorStop(1,color.replace("A","0"));
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+}
+function heartPoint(a,s,cx,cy){
+  return{
+    x:cx+16*Math.pow(Math.sin(a),3)*s,
+    y:cy-(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))*s
+  };
+}
+function easeInOutQuad(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+function lerpColor(c1,c2,k){return[c1[0]+(c2[0]-c1[0])*k,c1[1]+(c2[1]-c1[1])*k,c1[2]+(c2[2]-c1[2])*k];}
+
+function tinyHeart(ctx,x,y,s,a=1){
+  ctx.save();ctx.translate(x,y);ctx.scale(s/12,s/12);
+  ctx.fillStyle=`rgba(255,70,220,${a})`;
+  ctx.shadowBlur=12;ctx.shadowColor="#ff00d4";
+  ctx.beginPath();
+  ctx.moveTo(0,9);
+  ctx.bezierCurveTo(-15,-1,-9,-12,0,-5);
+  ctx.bezierCurveTo(9,-12,15,-1,0,9);
+  ctx.fill();ctx.restore();
+}
+
+/* Campanita suave (sin archivos externos) */
+let sharedAudioCtx=null;
+function playChime(freq=880){
+  try{
+    sharedAudioCtx=sharedAudioCtx||new(window.AudioContext||window.webkitAudioContext)();
+    const o=sharedAudioCtx.createOscillator();
+    const g=sharedAudioCtx.createGain();
+    o.type="sine";o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,sharedAudioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.14,sharedAudioCtx.currentTime+.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,sharedAudioCtx.currentTime+.9);
+    o.connect(g);g.connect(sharedAudioCtx.destination);
+    o.start();o.stop(sharedAudioCtx.currentTime+.9);
+  }catch(e){}
+}
+
+/* =========================================================
+   NAV DE CAPÍTULOS
+========================================================= */
+const chapters=[
+  {id:"ch1",label:"Universo"},
+  {id:"ch2",label:"Formas"},
+  {id:"ch3",label:"Cartas"},
+  {id:"ch5",label:"Canciones"},
+  {id:"ch6",label:"Cierre"}
+];
+const navDots=document.getElementById("navDots");
+chapters.forEach(c=>{
+  const d=document.createElement("div");
+  d.className="dot";
+  d.dataset.target=c.id;
+  d.innerHTML=`<span class="tip">${c.label}</span>`;
+  d.onclick=()=>document.getElementById(c.id).scrollIntoView({behavior:"smooth"});
+  navDots.appendChild(d);
+});
+const dotEls=[...navDots.querySelectorAll(".dot")];
+
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.querySelectorAll(".envelope").forEach((el,i)=>{
+        setTimeout(()=>el.classList.add("show"),i*90);
+      });
+    }
+  });
+},{threshold:.25});
+
+const navObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const idx=chapters.findIndex(c=>c.id===en.target.id);
+      dotEls.forEach((d,i)=>d.classList.toggle("active",i===idx));
+    }
+  });
+},{threshold:.5});
+
+chapters.forEach(c=>{
+  const el=document.getElementById(c.id);
+  navObserver.observe(el);
+  revealObserver.observe(el);
+});
+
+/* =========================================================
+   CAPÍTULO 1 — UNIVERSO (corazón, galaxia, estrellas)
+========================================================= */
+(function(){
+  const canvas=document.getElementById("canvas1");
+  const ctx=canvas.getContext("2d");
+  let W,H,DPR,t=0,last=performance.now();
+  const stars=[],dust=[],heartParticles=[],floatingHearts=[],meteors=[],bursts=[],fireflies=[],wishes=[];
+  const constellation=[];
+  const pulseOn=true;
+
+  function resize(){
+    DPR=Math.min(window.devicePixelRatio||1,2);
+    W=canvas.clientWidth;H=canvas.clientHeight;
+    canvas.width=W*DPR;canvas.height=H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    makeWorld();
+  }
+
+  function makeWorld(){
+    stars.length=0;dust.length=0;heartParticles.length=0;fireflies.length=0;
+    const min=Math.min(W,H);
+    for(let i=0;i<Math.floor(W*H/2600);i++){
+      stars.push({x:rand(0,W),y:rand(0,H),r:rand(.25,1.5),a:rand(.15,.9),p:rand(0,7)});
+    }
+    for(let i=0;i<4200;i++){
+      const a=rand(0,Math.PI*2);
+      const r=Math.pow(Math.random(),.55)*min*.44;
+      dust.push({x:W/2+Math.cos(a)*r,y:H*.68+Math.sin(a)*r*.28,r:rand(.25,1.5),a:rand(.08,.65),p:rand(0,7),drift:rand(.0003,.0012)});
+    }
+    const cx=W/2,cy=H*.29,s=min*.014;
+    for(let i=0;i<7200;i++){
+      const a=rand(0,Math.PI*2);
+      const p=heartPoint(a,s,cx,cy);
+      const spread=Math.pow(Math.random(),2)*s*2.0;
+      const q=rand(0,Math.PI*2);
+      heartParticles.push({x:p.x+Math.cos(q)*spread,y:p.y+Math.sin(q)*spread,size:rand(.35,2.1),a:rand(.15,.9),p:rand(0,7)});
+    }
+    for(let i=0;i<34;i++){
+      fireflies.push({x:rand(0,W),y:rand(H*.72,H*.98),phase:rand(0,10),speed:rand(.0006,.0016),size:rand(1.2,2.6),drift:rand(20,60)});
+    }
+    /* pequeña constelación en forma de corazón, aparte del corazón central */
+    constellation.length=0;
+    const ccx=W*.14,ccy=H*.18,cs=min*.0026;
+    const angles=[15,45,80,120,160,200,240,280,320,345];
+    angles.forEach(deg=>{
+      const p=heartPoint(deg*Math.PI/180,cs,ccx,ccy);
+      constellation.push(p);
+    });
+  }
+
+  function drawBg(){
+    const g=ctx.createRadialGradient(W*.5,H*.55,0,W*.5,H*.55,Math.max(W,H)*.75);
+    g.addColorStop(0,"#170016");g.addColorStop(.45,"#050008");g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    for(const s of stars){
+      const a=clamp(s.a+Math.sin(t*.002+s.p)*.25,.04,1);
+      ctx.fillStyle=`rgba(255,100,235,${a})`;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+  }
+  function drawNebula(){
+    for(let i=0;i<7;i++){
+      const x=W*(.12+i*.13)+Math.sin(t*.0004+i)*30;
+      const y=H*(.53+(i%3)*.08);
+      glowOn(ctx,x,y,Math.min(W,H)*.16,"rgba(255,0,200,A)",.025);
+    }
+    for(const p of dust){
+      const dx=Math.sin(t*p.drift+p.p)*3;
+      const dy=Math.cos(t*p.drift*1.4+p.p)*2;
+      ctx.fillStyle=`rgba(255,${70+Math.floor(p.p*15)},225,${p.a})`;
+      ctx.fillRect(p.x+dx,p.y+dy,p.r,p.r);
+    }
+  }
+  function drawGalaxy(){
+    const cx=W/2,cy=H*.68,min=Math.min(W,H);
+    glowOn(ctx,cx,cy,min*.24,"rgba(255,0,210,A)",.12);
+    ctx.save();ctx.translate(cx,cy);ctx.scale(1,.28);
+    for(let ring=0;ring<9;ring++){
+      ctx.beginPath();ctx.arc(0,0,min*(.075+ring*.021),0,Math.PI*2);
+      ctx.strokeStyle=`rgba(255,${100+ring*12},235,${.08+ring*.025})`;
+      ctx.lineWidth=1.2;ctx.stroke();
+    }
+    for(let i=0;i<1600;i++){
+      const a=rand(0,Math.PI*2);
+      const r=Math.pow(Math.random(),.5)*min*.25;
+      const spiral=a+r*.022+t*.00015;
+      const x=Math.cos(spiral)*r,y=Math.sin(spiral)*r;
+      ctx.fillStyle=`rgba(255,${rand(50,180)},230,${clamp(.75-r/(min*.36),.05,.7)})`;
+      ctx.fillRect(x,y,rand(.4,1.8),rand(.4,1.8));
+    }
+    ctx.restore();
+    ctx.save();ctx.translate(cx,cy);ctx.scale(1,.28);
+    const g=ctx.createRadialGradient(0,0,3,0,0,min*.15);
+    g.addColorStop(0,"#000");g.addColorStop(.25,"#090006");g.addColorStop(.43,"rgba(255,50,210,.95)");
+    g.addColorStop(.52,"rgba(255,220,120,.95)");g.addColorStop(.62,"rgba(255,40,210,.5)");g.addColorStop(1,"rgba(255,0,190,0)");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,min*.15,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    ctx.fillStyle="#000";ctx.shadowBlur=30;ctx.shadowColor="#ff00d4";
+    ctx.beginPath();ctx.ellipse(cx,cy,min*.038,min*.027,0,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  }
+  function drawHeart(){
+    const cx=W/2,cy=H*.29;
+    const pulse=pulseOn?1+Math.sin(t*.0032)*.055:1;
+    const s=Math.min(W,H)*.014*pulse;
+    const bottom=cy+s*16;
+    ctx.save();ctx.shadowBlur=25;ctx.shadowColor="#ff00d9";
+    ctx.strokeStyle="rgba(255,0,210,.55)";ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<=360;i++){
+      const p=heartPoint(i/360*Math.PI*2,s,cx,cy);
+      if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y);
+    }
+    ctx.stroke();ctx.restore();
+    for(const p of heartParticles){
+      const tw=.7+.3*Math.sin(t*.003+p.p);
+      ctx.fillStyle=`rgba(255,${30+Math.floor(tw*70)},225,${p.a*tw})`;
+      ctx.fillRect(p.x+Math.sin(t*.001+p.p),p.y+Math.cos(t*.0012+p.p),p.size,p.size);
+    }
+    const target=H*.68;
+    ctx.save();ctx.shadowBlur=18;ctx.shadowColor="#ff00dc";
+    ctx.strokeStyle="rgba(255,0,215,.75)";ctx.lineWidth=2;ctx.beginPath();
+    ctx.moveTo(cx,bottom);
+    ctx.quadraticCurveTo(cx+Math.sin(t*.002)*15,bottom+(target-bottom)*.45,cx,target);
+    ctx.stroke();ctx.restore();
+    glowOn(ctx,cx,bottom,45,"rgba(255,0,210,A)",.25);
+  }
+
+  /* ---------- FLECHA DE CUPIDO ATRAVESANDO EL CORAZÓN ---------- */
+  function drawArrow(){
+    const cx=W/2,cy=H*.29;
+    const pulse=pulseOn?1+Math.sin(t*.0032)*.055:1;
+    const s=Math.min(W,H)*.014*pulse;
+
+    const ang=-0.42;                     // inclinación: de abajo-izq hacia arriba-der
+    const dx=Math.cos(ang),dy=Math.sin(ang);
+    const half=s*22;                     // media longitud de la flecha
+    const acx=cx,acy=cy+s*3;             // centro real del corazón
+
+    const cycle=9000,fly=2600;           // vuela, se clava y descansa
+    const ph=t%cycle;
+    const travel=ph<fly?easeInOutQuad(ph/fly):1;
+    const off=(-Math.min(W,H)*.8)*(1-travel)+Math.sin(t*.0026)*2*travel;
+
+    const mx=acx+dx*off,my=acy+dy*off;
+    const tipX=mx+dx*half,tipY=my+dy*half;
+    const tailX=mx-dx*half,tailY=my-dy*half;
+    const gap=s*8.5*travel;              // tramo oculto "dentro" del corazón
+
+    ctx.save();
+    ctx.lineCap="round";
+    ctx.shadowBlur=14;ctx.shadowColor="#ffd27a";
+    ctx.strokeStyle="rgba(255,220,145,.95)";
+    ctx.lineWidth=Math.max(2,s*.55);
+    ctx.beginPath();                     // tramo trasero (sale por detrás)
+    ctx.moveTo(tailX,tailY);
+    ctx.lineTo(mx-dx*gap,my-dy*gap);
+    ctx.stroke();
+    ctx.beginPath();                     // tramo delantero (sale por delante)
+    ctx.moveTo(mx+dx*gap,my+dy*gap);
+    ctx.lineTo(tipX,tipY);
+    ctx.stroke();
+
+    const hl=s*3.4,hw=s*1.5;             // punta
+    ctx.fillStyle="rgba(255,238,190,.98)";
+    ctx.beginPath();
+    ctx.moveTo(tipX,tipY);
+    ctx.lineTo(tipX-dx*hl-dy*hw,tipY-dy*hl+dx*hw);
+    ctx.lineTo(tipX-dx*hl+dy*hw,tipY-dy*hl-dx*hw);
+    ctx.closePath();ctx.fill();
+
+    ctx.strokeStyle="rgba(255,110,225,.9)";   // plumas
+    ctx.lineWidth=Math.max(1.5,s*.45);
+    for(let i=0;i<3;i++){
+      const bx=tailX+dx*(i*s*1.5),by=tailY+dy*(i*s*1.5);
+      ctx.beginPath();
+      ctx.moveTo(bx,by);
+      ctx.lineTo(bx+dx*s*2.2-dy*s*1.5,by+dy*s*2.2+dx*s*1.5);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(bx,by);
+      ctx.lineTo(bx+dx*s*2.2+dy*s*1.5,by+dy*s*2.2-dx*s*1.5);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    glowOn(ctx,tipX,tipY,s*4.5,"rgba(255,225,160,A)",.35);
+
+    if(ph>fly-280&&ph<fly+260){          // chispitas al clavarse
+      for(let i=0;i<4;i++){
+        const a=rand(0,Math.PI*2),r=rand(s*2,s*7);
+        tinyHeart(ctx,acx+Math.cos(a)*r,acy+Math.sin(a)*r,rand(4,8),.85);
+      }
+    }
+  }
+
+  function drawOrbit(){
+    const cx=W/2,cy=H*.68,min=Math.min(W,H);
+    for(let i=0;i<6;i++){
+      const a=t*.00065*(i%2?1:-1)+i*Math.PI/3;
+      const r=min*(.16+i*.012);
+      const x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r*.25;
+      tinyHeart(ctx,x,y,5+2*Math.sin(t*.003+i),.85);
+    }
+  }
+  /* ---------- DOS PLANETAS GEMELOS ORBITANDO (tú y yo) ---------- */
+  function drawPlanet(x,y,r,coreColor,ringColor){
+    ctx.save();
+    glowOn(ctx,x,y,r*3.2,`rgba(${coreColor},A)`,.35);
+    ctx.translate(x,y);ctx.rotate(-.5);
+    ctx.strokeStyle=`rgba(${ringColor},.55)`;ctx.lineWidth=Math.max(1.4,r*.16);
+    ctx.beginPath();ctx.ellipse(0,0,r*1.9,r*.62,0,0,Math.PI*2);ctx.stroke();
+    ctx.restore();
+    const g=ctx.createRadialGradient(x-r*.3,y-r*.3,0,x,y,r);
+    g.addColorStop(0,`rgba(${coreColor},1)`);g.addColorStop(1,`rgba(${coreColor},.4)`);
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+  }
+  function drawTwinPlanets(){
+    const cx=W/2,cy=H*.68,min=Math.min(W,H);
+    const orbitR=min*.33;
+    const a1=t*.00022;
+    const a2=a1+Math.PI;             // siempre opuestos, pero unidos por un hilo
+    const x1=cx+Math.cos(a1)*orbitR,y1=cy+Math.sin(a1)*orbitR*.3;
+    const x2=cx+Math.cos(a2)*orbitR,y2=cy+Math.sin(a2)*orbitR*.3;
+    ctx.save();
+    ctx.setLineDash([2,6]);
+    ctx.strokeStyle="rgba(255,180,235,.28)";ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    ctx.restore();
+    drawPlanet(x1,y1,min*.016,"255,140,215","255,210,150");
+    drawPlanet(x2,y2,min*.014,"170,190,255","255,210,150");
+  }
+  /* ---------- CONSTELACIÓN EN FORMA DE CORAZÓN ---------- */
+  function drawConstellation(){
+    if(!constellation.length)return;
+    ctx.save();
+    ctx.strokeStyle=`rgba(255,200,240,${.14+.06*Math.sin(t*.0015)})`;
+    ctx.lineWidth=1;ctx.beginPath();
+    constellation.forEach((p,i)=>{if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y);});
+    ctx.closePath();ctx.stroke();
+    constellation.forEach((p,i)=>{
+      const tw=.5+.5*Math.sin(t*.0025+i*1.3);
+      ctx.fillStyle=`rgba(255,225,250,${.4+tw*.5})`;
+      ctx.beginPath();ctx.arc(p.x,p.y,1.4+tw*1.1,0,Math.PI*2);ctx.fill();
+    });
+    ctx.restore();
+  }
+  function drawFireflies(){
+    for(const f of fireflies){
+      const x=f.x+Math.sin(t*f.speed+f.phase)*f.drift;
+      const y=f.y+Math.cos(t*f.speed*1.3+f.phase)*(f.drift*.5);
+      const flicker=.4+.6*Math.abs(Math.sin(t*.003+f.phase*2));
+      glowOn(ctx,x,y,9,"rgba(255,235,150,A)",flicker*.5);
+      ctx.fillStyle=`rgba(255,240,170,${flicker})`;
+      ctx.beginPath();ctx.arc(x,y,f.size,0,Math.PI*2);ctx.fill();
+    }
+  }
+  function drawFloatingHearts(){
+    for(let i=floatingHearts.length-1;i>=0;i--){
+      const h=floatingHearts[i];
+      h.y-=h.speed;h.x+=Math.sin(t*.002+h.phase)*.35;h.life-=.004;
+      tinyHeart(ctx,h.x,h.y,h.size,h.life);
+      if(h.life<=0)floatingHearts.splice(i,1);
+    }
+  }
+  function spawnHeartRain(n=70){
+    for(let i=0;i<n;i++){
+      floatingHearts.push({x:rand(W*.05,W*.95),y:H+rand(0,H*.35),speed:rand(.5,2.3),size:rand(5,14),life:1,phase:rand(0,7)});
+    }
+  }
+  function spawnMeteor(){
+    meteors.push({x:rand(W*.05,W*.9),y:rand(-80,H*.35),vx:rand(5,10),vy:rand(4,8),life:1,len:rand(40,110)});
+  }
+  function drawMeteors(){
+    if(Math.random()<.012)spawnMeteor();
+    for(let i=meteors.length-1;i>=0;i--){
+      const m=meteors[i];
+      const px=m.x-m.vx*m.len/8,py=m.y-m.vy*m.len/8;
+      const g=ctx.createLinearGradient(px,py,m.x,m.y);
+      g.addColorStop(0,"rgba(255,0,220,0)");g.addColorStop(1,`rgba(255,180,250,${m.life})`);
+      ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(m.x,m.y);ctx.stroke();
+      m.x+=m.vx;m.y+=m.vy;m.life-=.018;
+      if(m.life<=0||m.x>W+100||m.y>H+100)meteors.splice(i,1);
+    }
+  }
+  function spawnWish(){
+    wishes.push({x:rand(W*.1,W*.5),y:rand(H*.08,H*.22),vx:rand(6,9),vy:rand(3,5),life:1,len:rand(70,130)});
+  }
+  function drawWishes(){
+    for(let i=wishes.length-1;i>=0;i--){
+      const w=wishes[i];
+      const px=w.x-w.vx*w.len/10,py=w.y-w.vy*w.len/10;
+      const g=ctx.createLinearGradient(px,py,w.x,w.y);
+      g.addColorStop(0,"rgba(255,255,255,0)");g.addColorStop(1,`rgba(255,255,255,${w.life})`);
+      ctx.strokeStyle=g;ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(w.x,w.y);ctx.stroke();
+      glowOn(ctx,w.x,w.y,10,"rgba(255,255,255,A)",w.life*.7);
+      w.x+=w.vx;w.y+=w.vy;w.life-=.012;
+      if(w.life<=0)wishes.splice(i,1);
+    }
+  }
+  function drawBursts(){
+    for(let i=bursts.length-1;i>=0;i--){
+      const b=bursts[i];b.r+=b.speed;b.life-=.025;
+      for(let j=0;j<3;j++){
+        const a=b.angle+j*2.094;
+        const x=b.x+Math.cos(a)*b.r,y=b.y+Math.sin(a)*b.r;
+        glowOn(ctx,x,y,18,"rgba(255,0,210,A)",b.life*.25);
+        tinyHeart(ctx,x,y,rand(4,9),b.life);
+      }
+      if(b.life<=0)bursts.splice(i,1);
+    }
+  }
+  function drawText(){
+    ctx.textAlign="center";ctx.textBaseline="middle";
+    const labels=[["AMOR ETERNO ♥",.18,.6,15],["JUNTOS SIEMPRE ♥",.25,.72,14],
+      ["CONTIGO SIEMPRE ♥",.78,.6,15],["TE AMO ♥",.76,.72,15]];
+    ctx.shadowBlur=12;ctx.shadowColor="#ff00d4";
+    for(const[s,x,y,z]of labels){
+      ctx.font=`bold ${z}px Arial`;ctx.fillStyle="#ff9bea";ctx.fillText(s,W*x,H*y);
+    }
+    const alpha=.55+.2*Math.sin(t*.003);
+    ctx.font="bold 12px Arial";ctx.fillStyle=`rgba(255,170,240,${alpha})`;
+    ctx.fillText("DOS CORAZONES · UN UNIVERSO · INFINITO",W/2,H*.94);
+  }
+
+  let running=true;
+  new IntersectionObserver(es=>es.forEach(e=>running=e.isIntersecting),{threshold:.05}).observe(document.getElementById("ch1"));
+
+  function frame(now){
+    const dt=now-last;last=now;
+    if(running){
+      t+=dt;
+      drawBg();drawNebula();drawConstellation();drawGalaxy();drawTwinPlanets();drawFireflies();drawHeart();drawArrow();drawOrbit();
+      drawMeteors();drawWishes();drawFloatingHearts();drawBursts();drawText();
+    }
+    requestAnimationFrame(frame);
+  }
+  setInterval(()=>{if(running)spawnHeartRain(70);},6000);
+  setInterval(()=>{if(running)spawnWish();},9000);
+  setInterval(()=>{
+    if(running&&Math.random()<.75){
+      bursts.push({x:W/2+rand(-W*.22,W*.22),y:H*.68+rand(-20,20),r:2,speed:rand(2,5),life:1,angle:rand(0,Math.PI*2)});
+    }
+  },700);
+
+  window.addEventListener("resize",resize);
+  resize();
+  requestAnimationFrame(frame);
+
+  /* ---------- FRASES CON EFECTO MÁQUINA DE ESCRIBIR ---------- */
+  const phraseEl=document.getElementById("cyclePhrase");
+  const phrases=[
+    "Mi persona favorita",
+    "El lugar al que siempre quiero volver",
+    "Mi razón para sonreír sin motivo",
+    "La mejor parte de cada día",
+    "Mi para siempre"
+  ];
+  let phIdx=0,phChar=0,phDeleting=false;
+  function typeLoop(){
+    const full=phrases[phIdx];
+    if(!phDeleting){
+      phChar++;
+      phraseEl.textContent=full.slice(0,phChar);
+      if(phChar>=full.length){phDeleting=true;setTimeout(typeLoop,1500);return;}
+      setTimeout(typeLoop,65);
+    }else{
+      phChar--;
+      phraseEl.textContent=full.slice(0,phChar);
+      if(phChar<=0){phDeleting=false;phIdx=(phIdx+1)%phrases.length;setTimeout(typeLoop,350);return;}
+      setTimeout(typeLoop,32);
+    }
+  }
+  if(phraseEl)typeLoop();
+})();
+
+/* =========================================================
+   CAPÍTULO 2 — GALERÍA DE FORMAS DE PARTÍCULAS
+========================================================= */
+(function(){
+  const canvas=document.getElementById("canvas2");
+  const ctx=canvas.getContext("2d");
+  const captionEl=document.getElementById("shapeCaption");
+  const nameEl=document.getElementById("shapeName");
+  const dotsEl=document.getElementById("shapeDots");
+  let W,H,t=0,last=performance.now(),running=false;
+
+  const shapeNames=["heart","star","infinity","moon","butterfly","flor","anillo","corona","llave","diamante","reloj","sol","abrazo","trebol","espiral","nota","paraguas","estela","beso"];
+  const shapeColors={
+    heart:[255,60,190],star:[255,210,90],infinity:[200,120,255],moon:[195,210,255],
+    butterfly:[255,140,210],flor:[255,90,150],anillo:[255,215,120],corona:[255,205,70],
+    llave:[255,225,150],diamante:[180,230,255],reloj:[255,170,90],sol:[255,205,60],abrazo:[255,110,180],
+    trebol:[140,235,140],espiral:[255,150,80],nota:[190,205,255],paraguas:[140,210,255],
+    estela:[255,235,190],beso:[255,110,150]
+  };
+  const captions={
+    heart:"Así te amo, sin condiciones",
+    star:"Brillas más que cualquier estrella",
+    infinity:"Te amaré por siempre",
+    moon:"Eres mi luna en las noches más oscuras",
+    butterfly:"Le diste alas a mi corazón",
+    flor:"Eres la flor más bonita de mi vida",
+    anillo:"Contigo quiero un para siempre",
+    corona:"Para mí, eres mi reina",
+    llave:"Tienes la llave de mi corazón",
+    diamante:"Eres invaluable para mí",
+    reloj:"Contigo el tiempo se siente eterno",
+    sol:"Iluminas cada uno de mis días",
+    abrazo:"Contigo, siempre en casa",
+    trebol:"Contigo la suerte se llama amor",
+    espiral:"Me atraes como un remolino, sin poder escapar",
+    nota:"Eres la melodía que no dejo de tararear",
+    paraguas:"Contigo, hasta la lluvia se siente bonita",
+    estela:"Dejaste una huella de luz en mi vida",
+    beso:"Cada beso tuyo se siente como el primero"
+  };
+  const nombres={
+    heart:"Corazón",star:"Estrella",infinity:"Infinito",moon:"Luna",butterfly:"Mariposa",
+    flor:"Flor",anillo:"Anillo",corona:"Corona",llave:"Llave",diamante:"Diamante",
+    reloj:"Reloj",sol:"Sol",abrazo:"Abrazo",trebol:"Trébol",espiral:"Espiral",
+    nota:"Nota musical",paraguas:"Paraguas",estela:"Estela",beso:"Beso"
+  };
+  const n=420;
+  const templates={};
+  let curIdx=0,nextIdx=1,holding=true,holdTimer=0,holdDur=3200,morphT=0,transDur=1500;
+
+  function shapePoint(name,u,R){
+    let x=0,y=0,a;
+    if(name==="heart"){a=u*Math.PI*2;const p=heartPoint(a,R*.062,0,0);x=p.x;y=p.y;}
+    else if(name==="star"){
+      a=u*Math.PI*2;const frac=((a*5)/(Math.PI*2))%1;const tri=1-Math.abs(2*(frac-.5));
+      const r=R*(.32+.68*Math.pow(tri,.6));x=Math.cos(a)*r;y=Math.sin(a)*r;
+    }else if(name==="infinity"){
+      a=u*Math.PI*2;const denom=1+Math.sin(a)*Math.sin(a);
+      x=R*1.15*Math.cos(a)/denom;y=R*.75*Math.sin(a)*Math.cos(a)/denom;
+    }else if(name==="butterfly"){
+      const th=u*Math.PI*4;
+      const rr=Math.exp(Math.sin(th))-2*Math.cos(4*th)+Math.pow(Math.sin((2*th-Math.PI)/24),5);
+      const scale=R/6.9;x=Math.sin(th)*rr*scale;y=-Math.cos(th)*rr*scale;
+    }else if(name==="flor"){
+      a=u*Math.PI; const r=R*Math.cos(5*a);
+      x=r*Math.cos(a);y=r*Math.sin(a);
+    }else if(name==="corona"){
+      a=u*Math.PI*2;
+      if(Math.floor(u*n)%2===0){
+        const frac=((a*5)/(Math.PI*2))%1;const tri=1-Math.abs(2*(frac-.5));
+        const r=R*(.55+.5*Math.pow(tri,1.6));x=Math.cos(a)*r;y=Math.sin(a)*r;
+      }else{x=Math.cos(a)*R*.5;y=Math.sin(a)*R*.5;}
+    }else if(name==="diamante"){
+      const verts=[[0,-R],[R*.65,0],[0,R],[-R*.65,0]];
+      const seg=Math.min(3,Math.floor(u*4));
+      const f=(u*4)%1;
+      const p1=verts[seg],p2=verts[(seg+1)%4];
+      x=p1[0]+(p2[0]-p1[0])*f;y=p1[1]+(p2[1]-p1[1])*f;
+    }else if(name==="reloj"){
+      const verts=[[-R,-R],[R,-R],[0,0],[R,R],[-R,R],[0,0]];
+      const seg=Math.min(4,Math.floor(u*5));
+      const f=(u*5)%1;
+      const p1=verts[seg],p2=verts[seg+1];
+      x=p1[0]+(p2[0]-p1[0])*f;y=p1[1]+(p2[1]-p1[1])*f;
+    }else if(name==="sol"){
+      a=u*Math.PI*2;
+      const rays=12;
+      const seg=((a*rays)/(Math.PI*2))%1;
+      const spike=Math.max(0,1-Math.abs(seg-.5)*2/.16);
+      const r=R*.55+Math.pow(spike,3)*R*.55;
+      x=Math.cos(a)*r;y=Math.sin(a)*r;
+    }else if(name==="trebol"){
+      a=u*Math.PI*2;
+      const r=R*.82*Math.cos(2*a);
+      x=r*Math.cos(a);y=r*Math.sin(a);
+    }else if(name==="espiral"){
+      const turns=2.5;
+      a=u*Math.PI*2*turns;
+      const r=R*.1+u*R*.8;
+      x=Math.cos(a)*r;y=Math.sin(a)*r;
+    }else if(name==="nota"){
+      if(u<.55){
+        const uu=u/.55*Math.PI*2;
+        const rx=R*.26,ry=R*.19,tilt=-.35;
+        const ex=rx*Math.cos(uu),ey=ry*Math.sin(uu);
+        x=ex*Math.cos(tilt)-ey*Math.sin(tilt)-R*.05;
+        y=ex*Math.sin(tilt)+ey*Math.cos(tilt)+R*.38;
+      }else if(u<.85){
+        const uu=(u-.55)/.30;
+        x=R*.19;y=R*.42-uu*R*1.05;
+      }else{
+        const uu=(u-.85)/.15;
+        x=R*.19+uu*R*.32;y=-R*.63+uu*R*.28;
+      }
+    }else if(name==="paraguas"){
+      if(u<.6){
+        const uu=u/.6;a=uu*Math.PI;
+        x=R*.85*Math.cos(a);y=-R*.85*Math.sin(a)-R*.05;
+      }else if(u<.85){
+        const uu=(u-.6)/.25;
+        x=0;y=-R*.05+uu*R*.85;
+      }else{
+        const uu=(u-.85)/.15;
+        a=Math.PI*.1+uu*Math.PI*1.3;
+        x=R*.18*Math.cos(a);y=R*.8+R*.18*Math.sin(a);
+      }
+    }else if(name==="estela"){
+      if(u<.3){
+        a=u/.3*Math.PI*2;
+        x=R*.75+R*.18*Math.cos(a);y=R*.18*Math.sin(a);
+      }else{
+        const uu=(u-.3)/.7;
+        x=R*.75-uu*R*1.5;
+        y=Math.sin(uu*Math.PI*3)*R*.14*(1-uu*.55);
+      }
+    }else if(name==="beso"){
+      a=u*Math.PI*2;
+      const r=R*(.62+.18*Math.cos(3*a));
+      x=r*Math.cos(a);y=r*Math.sin(a)*.45;
+    }
+    return{x,y};
+  }
+
+  function computeTemplates(){
+    const R=Math.min(W,H)*.16;
+    for(const name of shapeNames){
+      const arr=[];
+      if(name==="moon"){
+        const R1=R,R2=R*.8,offset=R*.55;
+        let count=0,tries=0;
+        while(count<n&&tries<n*60){
+          tries++;
+          const rx=rand(-R1,R1),ry=rand(-R1,R1);
+          const d1=Math.hypot(rx,ry),d2=Math.hypot(rx-offset,ry);
+          if(d1<=R1&&d2>=R2){arr.push({x:rx,y:ry});count++;}
+        }
+        while(arr.length<n)arr.push({x:rand(-R1,R1),y:rand(-R1,R1)});
+      }else if(name==="anillo"){
+        for(let i=0;i<n;i++){
+          const a=rand(0,Math.PI*2);
+          const r=rand(R*.62,R*.98);
+          arr.push({x:Math.cos(a)*r,y:Math.sin(a)*r});
+        }
+      }else if(name==="llave"){
+        const bowCx=0,bowCy=-R*.55,outerR=R*.34,innerR=R*.15;
+        let count=0,tries=0;
+        while(count<n&&tries<n*80){
+          tries++;
+          const rx=rand(-R,R*.6),ry=rand(-R,R*.7);
+          const dBow=Math.hypot(rx-bowCx,ry-bowCy);
+          const inBow=dBow<=outerR&&dBow>=innerR;
+          const inShaft=rx>=-R*.055&&rx<=R*.055&&ry>=-R*.2&&ry<=R*.55;
+          const inTooth1=rx>=R*.055&&rx<=R*.22&&ry>=R*.25&&ry<=R*.34;
+          const inTooth2=rx>=R*.055&&rx<=R*.16&&ry>=R*.42&&ry<=R*.5;
+          if(inBow||inShaft||inTooth1||inTooth2){arr.push({x:rx,y:ry});count++;}
+        }
+        while(arr.length<n)arr.push({x:rand(-R*.1,R*.1),y:rand(-R*.7,-R*.4)});
+      }else if(name==="abrazo"){
+        const off=R*.35,cr=R*.55;
+        for(let i=0;i<n;i++){
+          const useLeft=Math.random()<.5;
+          const cx=useLeft?-off:off;
+          const a=rand(0,Math.PI*2);
+          const r=Math.sqrt(Math.random())*cr;
+          arr.push({x:cx+Math.cos(a)*r,y:Math.sin(a)*r});
+        }
+      }else{
+        for(let i=0;i<n;i++){
+          const u=i/n;
+          const p=shapePoint(name,u,R);
+          const jitter=R*.04;
+          arr.push({x:p.x+rand(-jitter,jitter),y:p.y+rand(-jitter,jitter)});
+        }
+      }
+      templates[name]=arr;
+    }
+  }
+
+  function resize(){
+    W=canvas.clientWidth;H=canvas.clientHeight;
+    const DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=W*DPR;canvas.height=H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    computeTemplates();
+  }
+
+  function drawBg(){
+    const g=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.7);
+    g.addColorStop(0,"#180018");g.addColorStop(.5,"#06000a");g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  }
+
+  function frame(now){
+    const dt=clamp(now-last,0,50);last=now;
+    drawBg();
+    if(running){
+      t+=dt;
+      if(holding){
+        holdTimer+=dt;
+        if(holdTimer>holdDur){holding=false;morphT=0;}
+      }else{
+        morphT+=dt/transDur;
+        if(morphT>=1){
+          morphT=1;curIdx=nextIdx;nextIdx=(nextIdx+1)%shapeNames.length;
+          holding=true;holdTimer=0;
+          setPanel();
+        }
+      }
+    }
+    const curName=shapeNames[curIdx],nextName=shapeNames[nextIdx];
+    const curT=templates[curName],nextT=templates[nextName];
+    const ease=holding?0:easeInOutQuad(morphT);
+    const col=holding?shapeColors[curName]:lerpColor(shapeColors[curName],shapeColors[nextName],ease);
+    const cx=W*.5,cy=H*.46,bob=Math.sin(t*.0009)*8;
+    ctx.save();ctx.translate(cx,cy+bob);
+    glowOn(ctx,0,0,Math.min(W,H)*.22,`rgba(${col[0]|0},${col[1]|0},${col[2]|0},A)`,.12);
+    for(let i=0;i<n;i++){
+      const a=curT[i],b=nextT[i];
+      const x=holding?a.x:a.x+(b.x-a.x)*ease;
+      const y=holding?a.y:a.y+(b.y-a.y)*ease;
+      const tw=.5+.5*Math.sin(t*.004+i*.7);
+      ctx.fillStyle=`rgba(${col[0]|0},${col[1]|0},${col[2]|0},${(.35+.55*tw).toFixed(2)})`;
+      ctx.fillRect(x,y,2.1,2.1);
+    }
+    ctx.restore();
+    requestAnimationFrame(frame);
+  }
+
+  const progEl=document.getElementById("shapeProg");
+  function setPanel(){
+    const key=shapeNames[curIdx];
+    captionEl.style.opacity=0;nameEl.style.opacity=0;
+    setTimeout(()=>{
+      captionEl.textContent=captions[key];
+      nameEl.textContent=nombres[key];
+      captionEl.style.opacity=1;nameEl.style.opacity=.85;
+    },230);
+    [...dotsEl.children].forEach((d,i)=>d.classList.toggle("on",i===curIdx));
+    if(progEl)progEl.style.width=((curIdx+1)/shapeNames.length*100)+"%";
+  }
+  shapeNames.forEach((name,i)=>{
+    const d=document.createElement("span");
+    d.className="sdot";d.title=nombres[name];
+    d.onclick=()=>{
+      if(i===curIdx||!holding)return;
+      nextIdx=i;holding=false;morphT=0;
+    };
+    dotsEl.appendChild(d);
+  });
+
+  new IntersectionObserver(es=>es.forEach(e=>{
+    running=e.isIntersecting;
+    if(running&&!captionEl.textContent)setPanel();
+  }),{threshold:.3}).observe(document.getElementById("ch2"));
+
+  window.addEventListener("resize",resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+
+/* =========================================================
+   CAPÍTULO 3 — CARTAS (fondo estrellado suave + envelopes)
+========================================================= */
+(function(){
+  const canvas=document.getElementById("canvas3");
+  const ctx=canvas.getContext("2d");
+  let W,H,stars=[];
+  function resize(){
+    W=canvas.clientWidth;H=canvas.clientHeight;
+    const DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=W*DPR;canvas.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    stars=[];for(let i=0;i<160;i++)stars.push({x:rand(0,W),y:rand(0,H),r:rand(.3,1.4),a:rand(.2,.8),p:rand(0,7)});
+  }
+  let t=0;
+  function frame(){
+    t+=16;
+    const g=ctx.createRadialGradient(W*.5,H*.4,0,W*.5,H*.4,Math.max(W,H)*.8);
+    g.addColorStop(0,"#180018");g.addColorStop(.5,"#08000c");g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    for(const s of stars){
+      const a=clamp(s.a+Math.sin(t*.002+s.p)*.25,.05,1);
+      ctx.fillStyle=`rgba(255,150,235,${a})`;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize",resize);resize();requestAnimationFrame(frame);
+
+  const cartas=[
+    {t:"La primera vez",d:"el día que empezó todo",m:"Hay instantes que no avisan que van a cambiarlo todo. El nuestro fue así: un día cualquiera, una mirada que se quedó más tiempo del necesario, una conversación que no quería terminar.<br><br>No supe explicarlo entonces y sigo sin saber hacerlo del todo ahora: simplemente <b>algo encajó</b>, como si una pieza que llevaba tiempo esperando por fin encontrara su lugar.<br><br>Desde entonces cuento el tiempo distinto: hay un antes y un después de conocerte. Y elijo, una y otra vez, quedarme en el después.<br><br><b>Gracias por llegar</b>, y sobre todo, gracias por quedarte.",foto:"foto01.jpeg",fcap:"Desde el primer día ♡"},
+    {t:"Tu risa",d:"el sonido que más amo",m:"Hay sonidos que se quedan grabados para siempre, y el tuyo es uno de ellos. Tu risa tiene algo que no sé nombrar: llega sin avisar, contagia sin pedir permiso, y de pronto el día entero se siente más liviano.<br><br>He aprendido a distinguirla entre mil: la risa nerviosa cuando algo te da vergüenza, la risa floja cuando ya no puedes más, la risa bajita cuando intentas disimular que algo te hizo gracia.<br><br>Podría escucharla toda la vida y no me cansaría nunca. Es, sin exagerar, <b>mi canción favorita</b>.<br><br>Sigue riendo así, tan tuya, tan verdadera. El mundo necesita más de ese sonido.",foto:"foto02.jpeg",fcap:"Tu risa, mi canción favorita ♡"},
+    {t:"Los días simples",d:"lo cotidiano contigo",m:"No necesito grandes planes para ser feliz contigo. Una llamada corta, un mensaje a media tarde, una tontería que solo nosotros entendemos: eso basta para que el día valga la pena.<br><br>Aprendí que el amor no siempre se ve en los gestos enormes. A veces vive en lo pequeño: en preguntarte cómo dormiste, en guardarte el último bocado, en mandarte una canción sin más razón que pensar en ti.<br><br>Contigo descubrí que <b>la felicidad es bastante sencilla</b> cuando se comparte. No hace falta que sea perfecto; solo hace falta que seas tú.",foto:"foto03.jpeg",fcap:"Lo simple contigo ♡"},
+    {t:"Cuando algo sale mal",d:"mi refugio",m:"Hay días en los que todo pesa más de la cuenta. Días en los que las palabras no alcanzan y el cansancio gana. En esos días, pienso en ti, y todo se vuelve un poco más liviano.<br><br>No necesitas resolver nada; solo estar. Tu forma de escuchar sin juzgar, de abrazar sin preguntar demasiado, de quedarte aunque no tengas respuestas: eso también es amor, quizás el más importante.<br><br>Sé que pase lo que pase, tengo un lugar al cual volver. <b>Eres mi refugio</b>, el sitio donde puedo bajar la guardia y simplemente respirar.",foto:"foto04.jpeg",fcap:"Mi refugio ♡"},
+    {t:"Lo que más admiro de ti",d:"lo que veo cuando te miro",m:"Admiro tu forma de mirar la vida, incluso cuando ella no te lo pone fácil. Esa mezcla de fuerza y ternura que pocas personas logran sostener al mismo tiempo.<br><br>Te he visto caer y levantarte sin hacer ruido, cargar con cosas que no eran tuyas sin dejar de cuidar a los demás, sonreír incluso cuando por dentro estabas cansada. Eso no se aprende: eso se lleva dentro.<br><br>Me enamoras <b>un poco más cada día</b>, y lo curioso es que eso no ha dejado de pasar ni un solo día desde que te conozco.",foto:"foto05.jpeg",fcap:"Eres muy especial ♡"},
+    {t:"Tu mirada",d:"lo primero que me enamoró",m:"Dicen que los ojos hablan antes que la boca, y contigo eso siempre fue cierto. Recuerdo bien la primera vez que sostuve tu mirada más tiempo del necesario, y algo en mí supo que ya no habría vuelta atrás.<br><br>Tu mirada cambia según el momento: hay una para cuando te concentras, otra para cuando te haces la fuerte, y una que reservas solo para cuando de verdad eres feliz. Esa última es mi favorita.<br><br>Cuando me miras así, sin defensas, siento que <b>no necesito nada más</b> para saber que estoy exactamente donde quiero estar.",foto:"foto06.jpeg",fcap:"Tu mirada me enamora ♡"},
+    {t:"Las pequeñas cosas",d:"lo que nadie más nota",m:"Hay detalles que casi nadie ve, pero que yo guardo como tesoros: la forma en la que arrugas la nariz cuando algo no te convence, cómo tarareas canciones que ni siquiera sabes que estás cantando, esa costumbre tuya de cerrar los ojos un segundo antes de reír de verdad.<br><br>No son cosas grandes, lo sé. Pero son tuyas, y eso las vuelve importantes para mí. Aprendí a mirar de cerca justamente por ti.<br><br>Cada pequeño gesto tuyo me recuerda por qué elegí quedarme. Porque a veces <b>el amor no está en lo enorme, sino en lo diminuto</b> que solo alguien que presta atención logra ver.",foto:"foto07.jpeg",fcap:"Los pequeños detalles ♡"},
+    {t:"Cuando el silencio habla",d:"los momentos sin palabras",m:"No todo lo que siento por ti cabe en palabras, y por suerte contigo no siempre hacen falta. Hay silencios que dicen más que cualquier conversación: una mano que aprieta la otra, una cabeza que se apoya en un hombro, una mirada que se cruza sin necesidad de explicar nada.<br><br>Contigo aprendí que el silencio también puede ser cómodo, incluso hermoso. Que no todo tiene que llenarse de ruido para tener sentido.<br><br>En esos momentos callados, cuando simplemente estamos, siento que <b>nada nos falta</b>. Que ya lo tenemos todo, sin necesidad de decir una sola palabra.",foto:"foto08.jpeg",fcap:"El silencio que se siente bien ♡"},
+    {t:"Nuestros recuerdos",d:"lo que ya construimos",m:"A veces me detengo a pensar en todo lo que hemos vivido, y me sorprende ver cuánto hemos construido sin darnos cuenta. Cada risa compartida, cada plan improvisado, cada momento guardado sin saber que se volvería un recuerdo.<br><br>Tenemos una historia propia, con sus capítulos buenos y también con los difíciles, y eso la hace más real, más nuestra. No la cambiaría por nada.<br><br>Sé que seguiremos sumando páginas a esta historia, y eso me llena de una calma enorme. Porque contigo, <b>hasta lo simple se vuelve memorable</b>.",foto:"foto09.jpeg",fcap:"Nuestros recuerdos ♡"},
+    {t:"Cuando dudo de mí",d:"tu forma de creer en mí",m:"Hay días en los que dudo de mí mismo más de lo que debería. Días en los que las inseguridades hablan más fuerte que la razón. Y ahí apareces tú, recordándome quién soy cuando yo mismo lo olvido.<br><br>Tienes una forma particular de creer en mí, incluso cuando yo no encuentro motivos para hacerlo. No con palabras grandilocuentes, sino con esa certeza tranquila con la que dices \"tú puedes\", como si fuera un hecho y no una opinión.<br><br>Gracias por sostenerme en esos días. <b>Tu confianza en mí</b> ha sido, más de una vez, la única razón que necesité para seguir intentándolo.",foto:"foto10.jpeg",fcap:"Creo en ti, siempre ♡"},
+    {t:"Tu voz",d:"lo que me calma",m:"Tu voz tiene un efecto extraño en mí: sin importar qué tan complicado haya sido el día, basta con escucharte para que algo dentro de mí se calme.<br><br>Reconozco tus tonos como si fueran un idioma propio: el de cuando estás cansada, el de cuando algo te emociona de verdad, el de cuando finges estar bien aunque no lo estés del todo. He aprendido a leerte incluso en cómo suenas.<br><br>Si pudiera pedir algo simple para siempre, sería eso: seguir escuchándote contar tu día, aunque sea desde lejos. <b>Tu voz es, sin duda, uno de mis sonidos favoritos en el mundo.</b>",foto:"foto11.jpeg",fcap:"Tu voz me calma ♡"},
+    {t:"Crecer juntos",d:"lo que hemos aprendido",m:"Nadie nos enseñó a querer bien; fuimos aprendiendo sobre la marcha, a veces tropezando, a veces acertando, siempre intentando hacerlo mejor. Y eso también es hermoso: crecer de la mano de alguien que también está aprendiendo.<br><br>Hemos discutido, nos hemos entendido mal, hemos vuelto a empezar más de una vez. Pero cada vez que decidimos seguir, elegimos también seguir creciendo, uno junto al otro.<br><br>No busco a alguien perfecto, te busco a ti, con tus aciertos y tus días difíciles. Porque contigo entendí que <b>el amor también se construye</b>, no solo se siente.",foto:"foto12.jpeg",fcap:"Creciendo juntos ♡"},
+    {t:"Las noches de conversación",d:"cuando el tiempo se detiene",m:"Hay noches que se alargan sin que nos demos cuenta, entre risas, silencios y conversaciones que empiezan sin rumbo fijo. Contigo el tiempo se comporta distinto: dos horas se sienten como diez minutos cuando estamos hablando de todo y de nada.<br><br>Me gusta esa parte de nosotros: la que no necesita planes, solo ganas de seguir hablando. La que descubre cosas nuevas incluso después de tanto tiempo de conocernos.<br><br>Ojalá tengamos muchas noches más así, largas, sin prisa, solo nosotros. Porque contigo, <b>hasta el silencio de la madrugada se siente acompañado</b>.",foto:"foto13.jpeg",fcap:"Nuestras noches de conversación ♡"},
+    {t:"Lo que me enseñaste",d:"cómo cambiaste mi forma de ver la vida",m:"Antes de ti veía las cosas de otra manera. Tú, sin proponértelo, me enseñaste a mirar distinto: a valorar lo pequeño, a ser más paciente, a entender que no todo necesita solución inmediata.<br><br>Me enseñaste también a cuidar mejor, a escuchar de verdad, a decir lo que siento sin miedo a que suene demasiado. Contigo aprendí cosas que ningún libro me había enseñado.<br><br>No sé si te lo he dicho suficiente, así que lo dejo aquí, por escrito: <b>gracias por cambiarme para bien</b>, sin pedirme nada a cambio.",foto:"foto14.jpeg",fcap:"Gracias por enseñarme ♡"},
+    {t:"La distancia",d:"lo que no cambia aunque estemos lejos",m:"Hay días en los que la distancia pesa más de lo que quisiera admitir. Días en los que solo quiero estar cerca y no puedo, y eso también forma parte de querer a alguien: aprender a sostener el cariño incluso cuando el espacio no ayuda.<br><br>Pero he aprendido algo importante: la distancia no debilita lo que sentimos, solo lo pone a prueba. Y cada vez que superamos un día difícil sin estar juntos, confirmo que esto que tenemos es más fuerte de lo que cualquier kilómetro pueda medir.<br><br>Mientras tanto, sigo aquí, esperando el próximo abrazo. Porque contigo, <b>vale la pena esperar</b>.",foto:"foto15.jpeg",fcap:"Vale la pena esperar ♡"},
+    {t:"Nuestros sueños",d:"lo que quiero construir contigo",m:"Me gusta imaginar el futuro contigo dentro de él. No hace falta que sea perfecto ni que tenga todas las respuestas resueltas; solo necesito que estés tú, en cualquier versión de lo que venga.<br><br>Sueño con los viajes que aún no hacemos, con las conversaciones que todavía no tenemos, con los años que se van a sumar sin que los notemos pasar. Sueño, sobre todo, con seguir eligiéndote cada día que llegue.<br><br>No sé exactamente cómo se verá nuestro futuro, pero sí sé una cosa con certeza: <b>quiero que sea contigo</b>.",foto:"foto16.jpeg",fcap:"Nuestros sueños ♡"},
+    {t:"Solo porque sí",d:"sin motivo, sin fecha",m:"No hace falta una fecha especial, ni una razón concreta, ni el momento perfecto para decírtelo. A veces las cosas más importantes se dicen simplemente porque se sienten, sin esperar nada a cambio.<br><br>Así que aquí va, sin adornos ni excusas: pienso en ti más de lo que imaginas, sonrío solo de recordarte, y agradezco en silencio que existas y que hayas cruzado tu camino con el mío.<br><br><b>Te amo</b>, hoy y todos los días, aunque no siempre encuentre la forma exacta de decirlo.",foto:"foto17.jpeg",fcap:"Te amo, sin motivo ♡"},
+    {t:"Nuestro futuro",d:"lo que viene",m:"Llegamos al final de estas cartas, pero no al final de esta historia. Todavía queda tanto por vivir, tanto por descubrir, tanto por construir juntos.<br><br>Quiero seguir sumando capítulos contigo: los viajes que soñamos, las mudanzas, los martes aburridos convertidos en algo especial solo porque estás tú, los diciembres que se repiten pero nunca se sienten igual cuando los vivimos juntos.<br><br>Si algo tengo claro después de escribir todo esto, es que no hay versión de mi futuro en la que no estés incluida. <b>Contigo, siempre.</b> Hoy, mañana, y en todos los días que todavía no llegan.",foto:"foto18.jpeg",fcap:"Contigo, siempre ♡"}
+  ];
+
+  const wrap=document.getElementById("cartasWrap");
+  const ov=document.getElementById("letterOverlay");
+  const pBody=document.getElementById("pBody"),pCount=document.getElementById("pCount"),
+        pPrev=document.getElementById("pPrev"),pNext=document.getElementById("pNext");
+  const progBig=document.getElementById("pProgBig"),progSmall=document.getElementById("pProgSmall");
+  const heartTop=document.getElementById("pHeartTop"),heartBottom=document.getElementById("pHeartBottom");
+  const letterPhoto=document.getElementById("letterPhoto"),photoImg=document.getElementById("pPhotoImg"),photoCap=document.getElementById("pPhotoCap");
+  let openIdx=0;
+
+  function updateHearts(){
+    const on=!!cartas[openIdx].fav;
+    [heartTop,heartBottom].forEach(h=>{
+      h.classList.toggle("on",on);
+      h.textContent=on?"♥":"♡";
+    });
+  }
+  function toggleFav(){
+    cartas[openIdx].fav=!cartas[openIdx].fav;
+    updateHearts();
+    if(cartas[openIdx].fav)playChime(880);
+  }
+  heartTop.onclick=toggleFav;
+  heartBottom.onclick=toggleFav;
+
+  function openLetter(i){
+    openIdx=(i+cartas.length)%cartas.length;
+    const c=cartas[openIdx];
+
+    const paras=c.m.split("<br><br>");
+    pBody.innerHTML=paras.map(p=>`<p>${p}</p>`).join("");
+
+    pCount.textContent=`${openIdx+1} / ${cartas.length}`;
+    pPrev.disabled=openIdx===0;pNext.disabled=openIdx===cartas.length-1;
+
+    const pct=((openIdx+1)/cartas.length*100)+"%";
+    progBig.style.width=pct;progSmall.style.width=pct;
+
+    if(c.foto){
+      letterPhoto.style.display="";
+      photoImg.onerror=()=>{letterPhoto.style.display="none";};
+      photoImg.src=c.foto;
+      photoCap.textContent=c.fcap||"";
+    }else{
+      letterPhoto.style.display="none";
+    }
+
+    updateHearts();
+
+    ov.classList.add("show");
+    playChime(520+openIdx*18);
+    wrap.children[openIdx]?.classList.add("leida");
+  }
+  function closeLetter(){ov.classList.remove("show");}
+  pPrev.onclick=()=>openLetter(openIdx-1);
+  pNext.onclick=()=>openLetter(openIdx+1);
+  ov.addEventListener("click",e=>{if(e.target===ov)closeLetter();});
+  document.addEventListener("keydown",e=>{
+    if(!ov.classList.contains("show"))return;
+    if(e.key==="Escape")closeLetter();
+    if(e.key==="ArrowRight"&&openIdx<cartas.length-1)openLetter(openIdx+1);
+    if(e.key==="ArrowLeft"&&openIdx>0)openLetter(openIdx-1);
+  });
+
+  cartas.forEach((c,i)=>{
+    const card=document.createElement("div");
+    card.className="lcard envelope";
+    card.innerHTML=`
+      <div class="lc-num">${String(i+1).padStart(2,"0")}</div>
+      <div class="lc-seal">💌</div>
+      <div class="lc-title">${c.t}</div>
+      <div class="lc-hint">tocar para abrir</div>`;
+    card.onclick=()=>openLetter(i);
+    wrap.appendChild(card);
+  });
+})();
+
+/* =========================================================
+   CAPÍTULO 4 — MÚSICA
+========================================================= */
+(function(){
+  const canvas=document.getElementById("canvas5");
+  const ctx=canvas.getContext("2d");
+  let W,H,t=0,stars=[];
+  function resize(){
+    W=canvas.clientWidth;H=canvas.clientHeight;
+    const DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=W*DPR;canvas.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    stars=[];for(let i=0;i<140;i++)stars.push({x:rand(0,W),y:rand(0,H),r:rand(.3,1.4),a:rand(.2,.8),p:rand(0,7)});
+  }
+  function frame(){
+    t+=16;
+    const g=ctx.createRadialGradient(W*.5,H*.5,0,W*.5,H*.5,Math.max(W,H)*.8);
+    g.addColorStop(0,"#180018");g.addColorStop(.5,"#08000c");g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    for(const s of stars){
+      const a=clamp(s.a+Math.sin(t*.002+s.p)*.25,.05,1);
+      ctx.fillStyle=`rgba(255,150,235,${a})`;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize",resize);resize();requestAnimationFrame(frame);
+
+  /* ---------------- AUDIO ----------------
+     Ahora la playlist principal usa directamente tus canciones reales
+     (mp3 + portada) — deben estar guardadas en la MISMA carpeta que
+     este archivo HTML, con el nombre exacto indicado abajo.        */
+  let AC=null,master=null,analyser=null,freqData=null;
+  function audio(){
+    if(!AC){
+      AC=new(window.AudioContext||window.webkitAudioContext)();
+      master=AC.createGain();master.gain.value=.8;
+      analyser=AC.createAnalyser();analyser.fftSize=128;analyser.smoothingTimeConstant=.78;
+      freqData=new Uint8Array(analyser.frequencyBinCount);
+      master.connect(analyser);analyser.connect(AC.destination);
+    }
+    if(AC.state==="suspended")AC.resume();
+    return AC;
+  }
+  const mtof=m=>440*Math.pow(2,(m-69)/12);
+
+  /* generador de melodías de respaldo (por si alguna pista no carga) */
+  function compose(chords,lead,beat,reps){
+    const notes=[];let len=0;
+    for(let r=0;r<reps;r++){
+      chords.forEach((ch,ci)=>{
+        const base=(r*chords.length+ci)*4;
+        for(let i=0;i<8;i++){
+          const m=ch[i%ch.length]+(i>=4?12:0);
+          notes.push({m,t:base+i*.5,d:.9,v:.055,type:"triangle"});
+        }
+        notes.push({m:ch[0]-12,t:base,d:3.4,v:.075,type:"sine"});
+      });
+      lead.forEach(n=>notes.push({m:n[0],t:r*chords.length*4+n[1],d:n[2],v:.11,type:"sine"}));
+      len=(r+1)*chords.length*4;
+    }
+    return{notes,beat,dur:len*beat};
+  }
+  const C=[60,64,67,71],Am=[57,60,64,67],F=[53,57,60,65],G=[55,59,62,67];
+  const M1=compose([C,G,Am,F],[[79,0,1.5],[76,2,1],[74,3,1],[72,4,2],[76,6.5,1.5],[81,8,1.5],[79,10,1],[77,11,1],[76,12,3]],.52,3);
+
+  /* portada de respaldo (SVG generado) si a una canción le falta su imagen */
+  function makeCover(c1,c2,ico){
+    const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+      <defs><radialGradient id="g" cx="35%" cy="28%">
+        <stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/>
+      </radialGradient></defs>
+      <rect width="200" height="200" fill="url(#g)"/>
+      ${[...Array(5)].map((_,i)=>`<circle cx="100" cy="100" r="${28+i*17}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>`).join("")}
+      <text x="100" y="122" font-size="66" text-anchor="middle" fill="rgba(255,255,255,.9)">${ico}</text>
+    </svg>`;
+    return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+  }
+  const FALLBACK_COVER=makeCover("#ff6fd6","#4a0038","♥");
+
+  const wrap=document.getElementById("musicaWrap");
+  wrap.innerHTML=`
+    <div class="music-grid">
+      <div class="playlist-card">
+        <div class="pl-header" id="plHeader"></div>
+        <div class="playlist" id="playlist"></div>
+        <input type="file" id="filesInput" accept="audio/*" hidden>
+      </div>
+      <div class="now-card">
+        <button class="ctrl loop" id="loopBtn" title="repetir">🔁</button>
+        <div class="disc" id="disc">
+          <div class="disc-core">♪</div>
+          <img class="disc-art" id="discArt" alt="">
+          <div class="disc-shine"></div>
+        </div>
+        <div class="now-title" id="nowTitle"></div>
+        <div class="now-sub" id="nowSub"></div>
+        <canvas class="viz" id="viz"></canvas>
+        <div class="bar" id="bar"><i></i></div>
+        <div class="times"><span id="tCur">0:00</span><span id="tDur">0:00</span></div>
+        <div class="controls">
+          <button class="ctrl" id="prevBtn">⏮</button>
+          <button class="ctrl big" id="playBtn">▶</button>
+          <button class="ctrl" id="nextBtn">⏭</button>
+        </div>
+        <div class="volrow">🔈<input class="vol" id="vol" type="range" min="0" max="100" value="80"></div>
+      </div>
+    </div>
+    <div class="fav-card"><button class="fav-btn" id="favBtn">♡ Añadir a favoritos</button></div>
+    <div class="hintMus">Coloca los archivos .mp3 y .png de tus canciones en la misma carpeta que este HTML, con el nombre exacto de cada pista.<br>También puedes tocar 🎵 o 🖼 en cada canción para reemplazar el audio o la portada desde tu dispositivo.</div>`;
+
+  const listEl=document.getElementById("playlist");
+  const plHeader=document.getElementById("plHeader");
+  const discEl=document.getElementById("disc");
+  const titleEl=document.getElementById("nowTitle"),subEl=document.getElementById("nowSub");
+  const barEl=document.getElementById("bar"),barFill=barEl.querySelector("i");
+  const curEl=document.getElementById("tCur"),durEl=document.getElementById("tDur");
+  const playBtn=document.getElementById("playBtn");
+  const vizCv=document.getElementById("viz"),vzx=vizCv.getContext("2d");
+  let loop=false;
+
+  function fmt(s){if(!isFinite(s)||s<0)s=0;const m=Math.floor(s/60);return m+":"+String(Math.floor(s%60)).padStart(2,"0");}
+
+  /* ---- pistas reales: tu playlist ---- */
+  function makeTrack(file,portada,titulo,artista,duracion){
+    const a=new Audio(encodeURI(file));
+    a.preload="metadata";
+    a.addEventListener("ended",()=>onEnded());
+    a.addEventListener("loadedmetadata",()=>{renderList();if(tracks[idx]&&tracks[idx].audio===a)refreshNow();});
+    return{
+      title:titulo,
+      tag:artista+(duracion?" · "+duracion:""),
+      cover:portada?encodeURI(portada):FALLBACK_COVER,
+      audio:a
+    };
+  }
+  const tracks=[
+    makeTrack("Princesa de mi corazón ❤️.mp3","Princesa de mi corazón.png","Princesa de mi corazón ❤️","El corazón","6:54"),
+    makeTrack("No Dejes Que Apaguen Tu Brillo.mp3","No Dejes Que Apaguen Tu Brillo.png","No Dejes Que Apaguen Tu Brillo","El corazón","5:04"),
+    makeTrack("PÁGINAS DE LUZ.mp3","PÁGINAS DE LUZ.png","PÁGINAS DE LUZ","El corazón","5:58"),
+    makeTrack("ESPÉRAME HASTA QUE LLEGUE.mp3","ESPÉRAME HASTA QUE LLEGUE.png","ESPÉRAME HASTA QUE LLEGUE","El corazón","4:09"),
+    makeTrack("CUANDO TÚ QUIERAS.mp3","CUANDO TÚ QUIERAS.png","CUANDO TÚ QUIERAS","El corazón","5:07"),
+    makeTrack("Cuando llegue a ti.mp3","Cuando llegue a ti.png","Cuando llegue a ti","El corazón","6:11"),
+    makeTrack("Si Me Dejas Conocerte.mp3","Si Me Dejas Conocerte.png","Si Me Dejas Conocerte","El corazón","4:28"),
+    makeTrack("La Chica de la Mirada Encantadora.mp3","La Chica de la Mirada Encantadora.png","La Chica de la Mirada Encantadora","El corazón","4:57"),
+    makeTrack("La Chica de la Mirada.mp3","La Chica de la Mirada.png","La Chica de la Mirada","El corazón","3:27"),
+    makeTrack("Donde Empieza Tu Luz.mp3","Donde Empieza Tu Luz.png","Donde Empieza Tu Luz","El corazón","3:34"),
+    makeTrack("Cuando Te Miro.mp3","Cuando Te Miro.png","Cuando Te Miro","El corazón","4:29"),
+    makeTrack("Me Gustas Más Cada Día.mp3","Me Gustas Más Cada Día.png","Me Gustas Más Cada Día","El corazón","5:01")
+  ];
+
+  function renderList(){
+    listEl.innerHTML="";
+    plHeader.textContent=`${tracks.length} CANCIÓN${tracks.length===1?"":"ES"}`;
+    tracks.forEach((tr,i)=>{
+      const li=document.createElement("div");
+      li.className="tItem"+(i===idx?" active":"");
+      const dur=tr.audio?(tr.audio.duration?fmt(tr.audio.duration):(tr.tag.split(" · ")[1]||"")):fmt(tr.mel.dur);
+      const thumb=tr.cover?`<img class="tThumb" src="${tr.cover}" alt="">`:`<div class="tThumbFallback">♪</div>`;
+      li.innerHTML=`
+        ${thumb}
+        <div class="tMeta">
+          <div class="tName">${tr.title}</div>
+          <div class="tTag">${tr.tag}</div>
+        </div>
+        <div class="tExtra">
+          <button class="tMini" data-act="cover" title="portada">🖼</button>
+          <button class="tMini" data-act="mp3" title="tu mp3">🎵</button>
+        </div>
+        <div class="tRight">
+          <span class="tDur">${dur}</span>
+          <div class="tPlayDot">${i===idx&&playing?"⏸":"▶"}</div>
+        </div>`;
+      li.onclick=e=>{if(e.target.closest("button"))return;select(i,true);};
+      li.querySelector('[data-act="mp3"]').onclick=e=>{e.stopPropagation();pickFor(i);};
+      li.querySelector('[data-act="cover"]').onclick=e=>{e.stopPropagation();pickCover(i);};
+      listEl.appendChild(li);
+    });
+  }
+
+  /* ---- estado ---- */
+  let idx=0,playing=false;
+  let synthNodes=[],synthStart=0,synthOffset=0,synthTimer=null;
+
+  function stopAll(){
+    const tr=tracks[idx];
+    if(tr.audio){tr.audio.pause();}
+    synthNodes.forEach(n=>{try{n.stop?n.stop():n.disconnect();}catch(e){}});
+    synthNodes=[];clearTimeout(synthTimer);
+  }
+
+  function startSynth(tr,offset){
+    const ac=audio();
+    const{notes,beat,dur}=tr.mel;
+    const t0=ac.currentTime+.06;
+    notes.forEach(n=>{
+      const st=n.t*beat;
+      if(st+ n.d*beat<offset)return;
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.type=n.type;o.frequency.value=mtof(n.m);
+      const when=t0+Math.max(0,st-offset),du=n.d*beat;
+      g.gain.setValueAtTime(.0001,when);
+      g.gain.exponentialRampToValueAtTime(n.v,when+.03);
+      g.gain.exponentialRampToValueAtTime(.0001,when+du);
+      o.connect(g);g.connect(master);
+      o.start(when);o.stop(when+du+.05);
+      synthNodes.push(o);
+    });
+    synthStart=t0;synthOffset=offset;
+    synthTimer=setTimeout(()=>{onEnded();},(dur-offset)*1000+120);
+  }
+
+  function curTime(){
+    const tr=tracks[idx];
+    if(tr.audio)return tr.audio.currentTime;
+    if(!playing)return synthOffset;
+    return synthOffset+(AC.currentTime-synthStart);
+  }
+  function curDur(){
+    const tr=tracks[idx];
+    return tr.audio?(tr.audio.duration||0):tr.mel.dur;
+  }
+
+  function play(){
+    const tr=tracks[idx];
+    audio();
+    if(tr.audio){
+      if(!tr.node){try{tr.node=AC.createMediaElementSource(tr.audio);tr.node.connect(master);}catch(e){}}
+      tr.audio.play().catch(()=>{});
+    }else{
+      startSynth(tr,synthOffset);
+    }
+    playing=true;playBtn.textContent="⏸";discEl.classList.add("spin");
+    updateActiveDot();
+  }
+  function pause(){
+    const tr=tracks[idx];
+    if(!tr.audio&&playing)synthOffset=Math.min(curTime(),tr.mel.dur);
+    stopAll();
+    playing=false;playBtn.textContent="▶";discEl.classList.remove("spin");
+    updateActiveDot();
+  }
+  function updateActiveDot(){
+    const dot=listEl.querySelector(".tItem.active .tPlayDot");
+    if(dot)dot.textContent=playing?"⏸":"▶";
+  }
+  function select(i,autoplay){
+    if(i===idx&&autoplay){playing?pause():play();return;}
+    pause();
+    idx=(i+tracks.length)%tracks.length;
+    synthOffset=0;
+    if(tracks[idx].audio)tracks[idx].audio.currentTime=0;
+    refreshNow();renderList();
+    if(autoplay)play();
+  }
+  function onEnded(){
+    if(loop){synthOffset=0;const tr=tracks[idx];if(tr.audio)tr.audio.currentTime=0;stopAll();play();}
+    else select(idx+1,true);
+  }
+  const discArt=document.getElementById("discArt");
+  function refreshNow(){
+    const tr=tracks[idx];
+    if(tr.cover){discArt.src=tr.cover;discEl.classList.add("has-art");}
+    else{discArt.removeAttribute("src");discEl.classList.remove("has-art");}
+    titleEl.textContent=tr.title;
+    subEl.textContent=tr.tag;
+    durEl.textContent=fmt(curDur());
+    barFill.style.width="0%";curEl.textContent="0:00";
+  }
+
+  playBtn.onclick=()=>playing?pause():play();
+  document.getElementById("prevBtn").onclick=()=>{
+    if(curTime()>3&&playing){const wasPlaying=true;pause();synthOffset=0;const tr=tracks[idx];if(tr.audio)tr.audio.currentTime=0;if(wasPlaying)play();}
+    else select(idx-1,true);
+  };
+  document.getElementById("nextBtn").onclick=()=>select(idx+1,true);
+  const loopBtn=document.getElementById("loopBtn");
+  loopBtn.onclick=()=>{loop=!loop;loopBtn.style.opacity=loop?1:.45;loopBtn.style.color=loop?"#ff6fd6":"#ffd2f5";};
+  loopBtn.style.opacity=.45;
+  document.getElementById("vol").oninput=e=>{audio();master.gain.value=e.target.value/100;};
+  const favBtn=document.getElementById("favBtn");
+  favBtn.onclick=()=>{
+    favBtn.classList.toggle("on");
+    favBtn.innerHTML=favBtn.classList.contains("on")?"♥ En tus favoritos":"♡ Añadir a favoritos";
+  };
+  barEl.onclick=e=>{
+    const d=curDur();if(!d)return;
+    const r=barEl.getBoundingClientRect();
+    const pos=clamp((e.clientX-r.left)/r.width,0,1)*d;
+    const tr=tracks[idx];
+    if(tr.audio){tr.audio.currentTime=pos;}
+    else{const was=playing;pause();synthOffset=pos;if(was)play();}
+    barFill.style.width=(pos/d*100)+"%";
+  };
+
+  /* ---- portada de la canción ---- */
+  /* lee la carátula incrustada en las etiquetas ID3 del mp3 (frame APIC) */
+  function readCover(file){
+    return new Promise(res=>{
+      const fr=new FileReader();
+      fr.onerror=()=>res(null);
+      fr.onload=()=>{
+        try{
+          const buf=new Uint8Array(fr.result);
+          if(String.fromCharCode(buf[0],buf[1],buf[2])!=="ID3")return res(null);
+          const v=buf[3];
+          const size=((buf[6]&127)<<21)|((buf[7]&127)<<14)|((buf[8]&127)<<7)|(buf[9]&127);
+          let p=10;
+          const end=Math.min(10+size,buf.length);
+          while(p+10<end){
+            const id=String.fromCharCode(buf[p],buf[p+1],buf[p+2],buf[p+3]);
+            let fs;
+            if(v===4)fs=((buf[p+4]&127)<<21)|((buf[p+5]&127)<<14)|((buf[p+6]&127)<<7)|(buf[p+7]&127);
+            else fs=(buf[p+4]<<24)|(buf[p+5]<<16)|(buf[p+6]<<8)|buf[p+7];
+            if(fs<=0||p+10+fs>buf.length)break;
+            if(id==="APIC"){
+              let q=p+10;
+              const enc=buf[q];q++;
+              let mime="";
+              while(buf[q]!==0&&q<end){mime+=String.fromCharCode(buf[q]);q++;}
+              q++;                       // fin de mime
+              q++;                       // tipo de imagen
+              if(enc===0||enc===3){while(buf[q]!==0&&q<end)q++;q++;}
+              else{while(!(buf[q]===0&&buf[q+1]===0)&&q<end)q+=2;q+=2;}
+              const img=buf.slice(q,p+10+fs);
+              const blob=new Blob([img],{type:mime||"image/jpeg"});
+              return res(URL.createObjectURL(blob));
+            }
+            p+=10+fs;
+          }
+          res(null);
+        }catch(e){res(null);}
+      };
+      fr.readAsArrayBuffer(file.slice(0,1200000));
+    });
+  }
+  let coverTarget=-1;
+  const coverInput=document.createElement("input");
+  coverInput.type="file";coverInput.accept="image/*";coverInput.style.display="none";
+  document.body.appendChild(coverInput);
+  coverInput.onchange=e=>{
+    const f=e.target.files[0];
+    if(f&&coverTarget>=0){
+      const tr=tracks[coverTarget];
+      if(tr.cover&&tr.coverOwn)URL.revokeObjectURL(tr.cover);
+      tr.cover=URL.createObjectURL(f);tr.coverOwn=true;
+      renderList();if(coverTarget===idx)refreshNow();
+    }
+    coverTarget=-1;coverInput.value="";
+  };
+  function pickCover(i){coverTarget=i;coverInput.click();}
+
+  /* ---- cargar archivos del usuario ---- */
+  function attachFile(i,file){
+    const tr=tracks[i];
+    if(tr.url)URL.revokeObjectURL(tr.url);
+    tr.url=URL.createObjectURL(file);
+    const a=new Audio(tr.url);
+    a.preload="metadata";
+    a.addEventListener("loadedmetadata",()=>{if(i===idx)durEl.textContent=fmt(a.duration);renderList();});
+    a.addEventListener("ended",onEnded);
+    tr.audio=a;tr.node=null;
+    tr.title=file.name.replace(/\.[^.]+$/,"");
+    tr.tag="TU CANCIÓN · DESDE TU DISPOSITIVO";
+    renderList();if(i===idx)refreshNow();
+    readCover(file).then(url=>{
+      if(!url)return;
+      if(tr.cover&&tr.coverOwn)URL.revokeObjectURL(tr.cover);
+      tr.cover=url;tr.coverOwn=true;
+      renderList();if(i===idx)refreshNow();
+    });
+  }
+  function addFiles(files){
+    [...files].filter(f=>f.type.startsWith("audio")).forEach((f,k)=>{
+      const empty=tracks.findIndex(t=>!t.audio);
+      if(empty>=0)attachFile(empty,f);
+      else{tracks.push({title:"",tag:"",mel:M1});attachFile(tracks.length-1,f);}
+    });
+  }
+  let pickTarget=-1;
+  const filesInput=document.getElementById("filesInput");
+  filesInput.onchange=e=>{
+    if(pickTarget>=0&&e.target.files[0]){attachFile(pickTarget,e.target.files[0]);pickTarget=-1;}
+    filesInput.value="";
+  };
+  function pickFor(i){pickTarget=i;filesInput.click();}
+
+  /* ---- visualizador + progreso ---- */
+  function sizeViz(){
+    const d=Math.min(window.devicePixelRatio||1,2);
+    vizCv.width=vizCv.clientWidth*d;vizCv.height=vizCv.clientHeight*d;
+    vzx.setTransform(d,0,0,d,0,0);
+  }
+  window.addEventListener("resize",sizeViz);
+  setTimeout(sizeViz,60);
+
+  function uiLoop(){
+    const w=vizCv.clientWidth,h=vizCv.clientHeight;
+    vzx.clearRect(0,0,w,h);
+    const bars=28,bw=w/bars;
+    if(analyser)analyser.getByteFrequencyData(freqData);
+    for(let i=0;i<bars;i++){
+      const v=analyser?freqData[Math.floor(i*freqData.length/bars/1.6)]/255:0;
+      const bh=Math.max(2,v*h*(playing?1:.05));
+      const g=vzx.createLinearGradient(0,h-bh,0,h);
+      g.addColorStop(0,"#ffd27a");g.addColorStop(1,"#ff3fc4");
+      vzx.fillStyle=g;
+      vzx.fillRect(i*bw+1,h-bh,bw-2.5,bh);
+    }
+    const d=curDur(),c=curTime();
+    if(d){barFill.style.width=clamp(c/d,0,1)*100+"%";curEl.textContent=fmt(c);durEl.textContent=fmt(d);}
+    requestAnimationFrame(uiLoop);
+  }
+
+  renderList();refreshNow();requestAnimationFrame(uiLoop);
+})();
+
+/* =========================================================
+   CAPÍTULO 5 — CIERRE
+========================================================= */
+(function(){
+  const canvas=document.getElementById("canvas6");
+  const ctx=canvas.getContext("2d");
+  let W,H,t=0,stars=[];
+  function resize(){
+    W=canvas.clientWidth;H=canvas.clientHeight;
+    const DPR=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=W*DPR;canvas.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    stars=[];for(let i=0;i<180;i++)stars.push({x:rand(0,W),y:rand(0,H),r:rand(.3,1.5),a:rand(.2,.9),p:rand(0,7)});
+  }
+  function frame(){
+    t+=16;
+    const g=ctx.createRadialGradient(W*.5,H*.4,0,W*.5,H*.4,Math.max(W,H)*.85);
+    g.addColorStop(0,"#1c0018");g.addColorStop(.5,"#08000c");g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    for(const s of stars){
+      const a=clamp(s.a+Math.sin(t*.002+s.p)*.25,.05,1);
+      ctx.fillStyle=`rgba(255,150,235,${a})`;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("resize",resize);resize();requestAnimationFrame(frame);
+
+  const card=document.querySelector(".cierre-card");
+  new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting)card.classList.add("show");
+  }),{threshold:.25}).observe(document.getElementById("ch6"));
+
+  /* ---------------- GALERÍA DE FOTOS ----------------
+     Las fotos deben estar en la MISMA carpeta que este archivo HTML.
+     Si las guardas en una subcarpeta, escribe la ruta así:
+     {src:"fotos/foto01.jpeg",cap:""}
+
+     El texto de "cap" es opcional: si lo dejas vacío no se muestra nada.
+  */
+  const fotos=[
+    {src:"foto01.jpeg",cap:""},
+    {src:"foto02.jpeg",cap:""},
+    {src:"foto03.jpeg",cap:""},
+    {src:"foto04.jpeg",cap:""},
+    {src:"foto05.jpeg",cap:""},
+    {src:"foto06.jpeg",cap:""},
+    {src:"foto07.jpeg",cap:""},
+    {src:"foto08.jpeg",cap:""},
+    {src:"foto09.jpeg",cap:""},
+    {src:"foto10.jpeg",cap:""},
+    {src:"foto11.jpeg",cap:""},
+    {src:"foto12.jpeg",cap:""},
+    {src:"foto13.jpeg",cap:""},
+    {src:"foto14.jpeg",cap:""},
+    {src:"foto15.jpeg",cap:""},
+    {src:"foto16.jpeg",cap:""},
+    {src:"foto17.jpeg",cap:""},
+    {src:"foto18.jpeg",cap:""}
+  ];
+  const AUTO_MS=4200; // tiempo entre foto y foto (milisegundos)
+
+  const stage=document.getElementById("galStage");
+  const thumbs=document.getElementById("galThumbs");
+  const empty=document.getElementById("galEmpty");
+  const capEl=document.getElementById("galCap");
+  const prevB=document.getElementById("galPrev"),nextB=document.getElementById("galNext");
+  const countEl=document.getElementById("galCount");
+  let cur=0,slides=[],autoTimer=null,galVisible=false;
+
+  function render(){
+    [...stage.querySelectorAll(".gal-slide")].forEach(n=>n.remove());
+    thumbs.innerHTML="";slides=[];
+    empty.style.display=fotos.length?"none":"block";
+    prevB.style.display=nextB.style.display=fotos.length>1?"flex":"none";
+    countEl.style.display=fotos.length?"block":"none";
+    fotos.forEach((f,i)=>{
+      const sl=document.createElement("div");
+      sl.className="gal-slide";
+      sl.innerHTML=`<img class="bg" src="${f.src}" alt="" aria-hidden="true">
+                    <img class="fg" src="${f.src}" alt="">`;
+      stage.insertBefore(sl,stage.firstChild);
+      slides.push(sl);
+      const th=document.createElement("img");
+      th.src=f.src;th.alt="";th.loading="lazy";
+      th.onclick=()=>{show(i);restartAuto();};
+      thumbs.appendChild(th);
+    });
+    show(0);
+  }
+
+  function show(i){
+    if(!fotos.length){capEl.textContent="";return;}
+    cur=(i+fotos.length)%fotos.length;
+    slides.forEach((sl,k)=>sl.classList.toggle("on",k===cur));
+    [...thumbs.children].forEach((th,k)=>{
+      th.classList.toggle("on",k===cur);
+      if(k===cur){
+        const target=th.offsetLeft-(thumbs.clientWidth-th.clientWidth)/2;
+        thumbs.scrollTo({left:target,behavior:"smooth"});
+      }
+    });
+    capEl.textContent=fotos[cur].cap||"";
+    countEl.textContent=`${cur+1} / ${fotos.length}`;
+  }
+
+  function restartAuto(){
+    clearInterval(autoTimer);
+    if(galVisible&&fotos.length>1)autoTimer=setInterval(()=>show(cur+1),AUTO_MS);
+  }
+
+  prevB.onclick=()=>{show(cur-1);restartAuto();};
+  nextB.onclick=()=>{show(cur+1);restartAuto();};
+
+  /* pausa el pase mientras miras una foto con el cursor encima */
+  stage.addEventListener("mouseenter",()=>clearInterval(autoTimer));
+  stage.addEventListener("mouseleave",restartAuto);
+
+  /* deslizar con el dedo en el móvil */
+  let tx=0;
+  stage.addEventListener("touchstart",e=>{tx=e.changedTouches[0].clientX;},{passive:true});
+  stage.addEventListener("touchend",e=>{
+    const d=e.changedTouches[0].clientX-tx;
+    if(Math.abs(d)>40){show(cur+(d<0?1:-1));restartAuto();}
+  },{passive:true});
+
+  /* el pase automático y las flechas del teclado solo actúan cuando este
+     capítulo está realmente visible — así nunca "salta" la página sola */
+  new IntersectionObserver(es=>es.forEach(e=>{
+    galVisible=e.isIntersecting;
+    if(galVisible)restartAuto();else clearInterval(autoTimer);
+  }),{threshold:.4}).observe(document.getElementById("ch6"));
+  document.addEventListener("keydown",e=>{
+    if(!galVisible||!fotos.length)return;
+    if(document.getElementById("letterOverlay").classList.contains("show"))return;
+    if(e.key==="ArrowRight"){show(cur+1);restartAuto();}
+    if(e.key==="ArrowLeft"){show(cur-1);restartAuto();}
+  });
+
+  render();
+
+  /* ---------------- CONFETI ---------------- */
+  const confettiLayer=document.getElementById("confettiLayer");
+  const bits=["💗","🌻","🌸","✨","💌","🌹"];
+  function launchConfetti(){
+    for(let i=0;i<70;i++){
+      const span=document.createElement("span");
+      span.className="confetti-piece";
+      span.textContent=bits[Math.floor(rand(0,bits.length))];
+      span.style.left=rand(0,100)+"vw";
+      span.style.animationDuration=rand(3.5,6.5)+"s";
+      span.style.fontSize=rand(16,30)+"px";
+      confettiLayer.appendChild(span);
+      setTimeout(()=>span.remove(),7000);
+    }
+  }
+  document.getElementById("surpriseBtn").onclick=()=>{playChime(700);launchConfetti();};
+  document.getElementById("restartBtn").onclick=()=>{
+    document.getElementById("ch1").scrollIntoView({behavior:"smooth"});
+  };
+})();
+</script>
+</body>
+</html>
